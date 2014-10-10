@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Kristi's Music Project</title>
+
+		<!-- Load in external CSS files //-->
+        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css" />
+		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" type="text/css" href="css/play.css" />
+		
+		<style type="text/css">
+		body {
+	background-color: #FFFFFF;
+}
+        </style>
+        
+		
+		
+		<!-- Load in external Javascript files //-->
+		<script src="js/jquery.js"></script>
+		<script src="js/less.js"></script>
+		<script src="bootstrap/js/bootstrap.js"></script>
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src="js/setUp.js"></script>
+		<script src="js/piano.js"></script>
+		<script src="js/playRecord.js"></script>
+		
+    <meta charset="utf-8">
+	</head>
+	
+	<body>
+		
+		<!-- Overall Container //-->
+		<div class="container-fluid" id="main_container">
+			
+			<!-- Header //-->
+			<h1>Kristi's piano</h1>
+			
+					<!-- Menu tabs - No need to edit //-->
+  					<ul class="nav nav-tabs nav-justified" id="menu">
+							<li class="active">
+								<a href="" id="welcome">Welcome</a>
+							</li>
+							
+							<li>
+								<a href="" id="play">Play</a>
+							</li>
+						</ul>
+				
+				
+				
+				<!-- Content area //-->
+				<!-- Enter your content in the div with the correct class name //-->
+				<div class="row-fluid" id="content_container">
+					<div class="span12" id="content">
+    					
+    					<div class="welcome">
+    						<fieldset>
+                                <legend>Welcome Screen.</legend>
+                                <br/>
+								<label> <Select id="userInstrument">
+								<option>Piano</option>
+								</Select></label>
+                            </fieldset>
+   							<br />
+    					</div>
+    
+    					<div class="play"  id="playTab" style="display: none;">
+						<div class="player">
+						<button id="recordButton" ></button>
+    					</div>			
+			
+    					</div>
+					</div>
+				</div>
+			</div>
+			
+				
+			
+		
+	</body>
+</html>
