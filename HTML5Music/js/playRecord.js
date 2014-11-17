@@ -1,6 +1,9 @@
+var mouseDown=false;
 var notesPlayed;
 var currentTime;
+var Timer;
 var recording=false;
+
 function Note(id, time)
 {
  this.note=id;
@@ -9,44 +12,52 @@ function Note(id, time)
 	else
 		this.timePlayed=-1;
 }
-function keymouseup(event)
+function setUpPlay()
 {
-	var id=event.data[0];
+	$("#recordButton").mouseup(recmouseup);
+	$("#playButton").mouseup(playMouseUp);
+	Timer=new Timer();
 	
-	$("#"+id).css("background", "");
 }
 function recmouseup(event)
 {
 	if(!recording)
 	{
-	$("#recordButton").css("background","url(images/record_button_down.png)");
+	notesPlayed=[];
+	Timer.start();
+	console.log("recording");
+	$(".light").addClass("glow");
+	$("#recordButton").addClass("pressed");
 	recording=true;
 	}
 	else
 	{
-		$("#recordButton").css("background","");
+		$(".light").removeClass("glow");
+		$("#recordButton").removeClass("pressed");
 		recording=false;
+		console.log("!recording");
+		Timer.stop();
+	
 	}
 	
 }
-function playAudio(event)
+function playMouseUp()
 {
-	var keyid=event.data[0];
-	$("#"+keyid).css("background", "red");
-	var sound= document.getElementById(keyid+"_sound");
-	sound.pause();
-	if(sound.currentTime!=0)
-	{
-//console.log("currentTime: "+sound.currentTime);
-	currentTime=sound.currentTime;
-	if(recording)
-	$("#"+keyid+"_sound").trigger("ended",[keyid]);
-	sound.currentTime=0;	
-	}
-	sound.play();
-//console.log("playing: "+keyid);
-	
+	if($("#playButton").hasClass("pressed"))
+		$("#playButton").removeClass("pressed");
+	else
+		$("#playButton").addClass("pressed");
+
 }
+function saveNote(note)
+{
+ var n=new Note(note, Timer.getTime());
+ 
+ console.log("saving note:"+note);
+ notesPlayed.push(n);
+}
+
+
 function noteEnded(event)
 {
 	var id=event.data[0];

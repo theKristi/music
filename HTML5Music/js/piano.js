@@ -1,27 +1,107 @@
 var whiteNoteDictionary=["C","D","E","F","G","A","B"];
 var blackNoteDictionary=["Db","Eb","Gb","Ab","Bb"];
-function buildPiano()
+Piano=function()
+{
+
+}
+Piano.prototype.build=function()
 {
 	$("#playTab").append("<div id='pianoBody'></div>");
-	$("#pianoBody").append("<div id='pianoSounds' style='display:none;'></div>");
+	//$("#pianoBody").append("<div id='pianoSounds' style='display:none;'></div>");
+	$("#content_container").mouseup(keymouseup);
 	buildOctaves();
+	loadSound();
 }//end buildPiano
 function addSound(keyid)
 {
 	//add white keys
 
-	$("#pianoSounds").append("<audio preload='auto' id='"+keyid+"_sound' controls><source src='sondfonts/acoustic_grand_piano-mp3/"+keyid+".mp3' type='audio/mpeg'></audio>");
+	//$("#pianoSounds").append("<audio preload='auto' id='"+keyid+"_sound' controls><source src='sondfonts/acoustic_grand_piano-mp3/"+keyid+".mp3' type='audio/mpeg'></audio>");
 //console.log("trying to play: "+keyid);
-	$("#"+keyid).mousedown([keyid],playAudio);
-	$("#"+keyid).mouseup([keyid],keymouseup);
-	$("#"+keyid).mouseout([keyid],keymouseup);
-	$("#"+keyid+"_sound").on("ended",[keyid],noteEnded);
+	$("#"+keyid).mousedown([keyid],keymousedown);
+	$("#"+keyid).mouseenter([keyid],keymouseenter);
+	$("#"+keyid).mouseout([keyid],keymouseout);
+	//$("#"+keyid+"_sound").on("ended",[keyid],noteEnded);
 	
 
 	
 }
 
+function keymouseup(event)
+{
+	mouseDown=false;
+	//var id=event.data[0];
+	
+	$(".keyWhite").css("background", "");
+	$(".keyBlack").css("background", "");
+}
+function keymousedown(event)
+{
+	mouseDown=true;
+	console.log("playing: "+event.data[0]);
+	var keyid=event.data[0];
+	$("#"+keyid).css("background", "red");
+	playNote(event.data[0]);
+}
+function keymouseenter(event)
+{
+	var keyid=event.data[0];
+	if(mouseDown)
+	{
+			
+		playNote(keyid);
+		var keyid=event.data[0];
+	$("#"+keyid).css("background", "red");
+	}
+}
+function keymouseout(event)
+{
+if(mouseDown)
+	{
+		var keyid=event.data[0];
+	$("#"+keyid).css("background", "");
+	}
+}
 
+function loadSound()
+{MIDI.loadPlugin({
+		soundfontUrl: "./soundfont/",
+		instrument: "acoustic_grand_piano",
+		callback: function() {
+			console.log("piano loaded");
+			
+		}
+	});
+	}
+function playNote(keyid)
+{
+	//
+	var note=MIDI.keyToNote[keyid];
+//console.log("playing: "+note);
+var delay = 0; 
+
+			var velocity = 127; // how hard the note hits
+			// play the note
+			MIDI.setVolume(0, 127);
+			MIDI.noteOn(0, note, velocity, delay);
+	if(recording)
+	{
+		saveNote(note);
+	}
+	/*var sound= document.getElementById(keyid+"_sound");
+	sound.pause();
+	if(sound.currentTime!=0)
+	{
+//console.log("currentTime: "+sound.currentTime);
+	currentTime=sound.currentTime;
+	if(recording)
+	$("#"+keyid+"_sound").trigger("ended",[keyid]);
+	sound.currentTime=0;	
+	}
+	sound.play();*/
+
+	
+}
 function buildOctaves()
 { 
  for(i=0;i<9;i++)

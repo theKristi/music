@@ -1,9 +1,13 @@
 $(document).ready(setUp); // End Document Ready
 function setUp()
 {
-$("#recordButton").mouseup(recmouseup);
+setUpPlay();
 tabSwitch();
- buildPiano();       
+ var name=$("#userInstrument option:selected").text();
+ 
+ var instrument=buildInstrument(name);
+ 
+ instrument.build();
  }
 		
 		
