@@ -10,7 +10,7 @@ Timer=function()
 Timer.prototype.start=function()
 {
 	currentTime=0;
-	console.log("Time started:"+currentTime);
+	//console.log("Time started:"+currentTime);
 	interval=setInterval(increment,10);
 }
 function increment(event)
@@ -22,7 +22,7 @@ function increment(event)
 Timer.prototype.stop=function()
 {
 	clearInterval(interval);
-	console.log("Timestopped:"+currentTime);
+	//console.log("Timestopped:"+currentTime);
 	
 }
 Timer.prototype.getTime=function()

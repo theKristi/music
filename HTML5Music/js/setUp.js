@@ -3,13 +3,19 @@ function setUp()
 {
 setUpPlay();
 tabSwitch();
- var name=$("#userInstrument option:selected").text();
+changeInstrument();
+$("#userInstrument option:selected").onchange(changeInstrument);
+ 
+ 
+ }
+function changeInstrument()
+{
+var name=$("#userInstrument option:selected").text();
  
  var instrument=buildInstrument(name);
  
  instrument.build();
- }
-		
+}		
 		
 function tabSwitch()
 {

@@ -1,17 +1,12 @@
+/*PlayRecord.js this should handle recording tracks and playback*/
+
 var mouseDown=false;
 var notesPlayed;
 var currentTime;
 var Timer;
 var recording=false;
 
-function Note(id, time)
-{
- this.note=id;
-	if (time!=undefined)
-		this.timePlayed=time;
-	else
-		this.timePlayed=-1;
-}
+
 function setUpPlay()
 {
 	$("#recordButton").mouseup(recmouseup);

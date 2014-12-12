@@ -1,8 +1,10 @@
+/*piano.js build piano gui, and handles playing piano audio*/
+
 var whiteNoteDictionary=["C","D","E","F","G","A","B"];
 var blackNoteDictionary=["Db","Eb","Gb","Ab","Bb"];
 Piano=function()
 {
-
+midiNumber:0;
 }
 Piano.prototype.build=function()
 {
@@ -38,7 +40,7 @@ function keymouseup(event)
 function keymousedown(event)
 {
 	mouseDown=true;
-	console.log("playing: "+event.data[0]);
+	//console.log("playing: "+event.data[0]);
 	var keyid=event.data[0];
 	$("#"+keyid).css("background", "red");
 	playNote(event.data[0]);
