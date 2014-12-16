@@ -1,7 +1,7 @@
 /*PlayRecord.js this should handle recording tracks and playback*/
 
 var mouseDown=false;
-var notesPlayed;
+var track;
 var currentTime;
 var Timer;
 var recording=false;
@@ -18,7 +18,7 @@ function recmouseup(event)
 {
 	if(!recording)
 	{
-	notesPlayed=[];
+	//notesPlayed=[];
 	Timer.start();
 	console.log("recording");
 	$(".light").addClass("glow");

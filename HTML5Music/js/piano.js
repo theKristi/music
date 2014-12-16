@@ -6,9 +6,9 @@ Piano=function()
 {
 midiNumber:0;
 }
-Piano.prototype.build=function()
+Piano.prototype.build=function(tab)
 {
-	$("#playTab").append("<div id='pianoBody'></div>");
+	$("."+tab).append("<div id='pianoBody'></div>");
 	//$("#pianoBody").append("<div id='pianoSounds' style='display:none;'></div>");
 	$("#content_container").mouseup(keymouseup);
 	buildOctaves();

@@ -196,16 +196,16 @@ var MidiWriter = function(config) {
                 }
             },
             save: function(here) {
-			/*if(here)
+			if(here)
 			{
-				var download=document.getElementById("download");
+				/*var download=document.getElementById("download");
 				if(download===undefined)
 				{
 					download=document.createElement('div');
 					download.style="none";
 					download.value="data:audio/midi;base64," + this.b64;
-				}
-			}*/
+				}*/
+			}
 			else{
 			  window.open("data:audio/midi;base64," + this.b64,
                             "JSMidi generated output",

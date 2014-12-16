@@ -22,7 +22,7 @@
 		<script src="js/setUp.js"></script>
 		<script src="js/piano.js"></script>
 		<script src="js/Instrument.js"></script>
-		<script src="js/playRecord.js"></script>
+		<script src="js/Song.js"></script>
 		<script src="js/Timer.js"></script>
 		<script src="js/Track.js"></script>
 		<script src="js/MIDI/inc/shim/Base64.js"></script>
@@ -44,7 +44,13 @@
 		<div class="container-fluid" id="main_container">
 			
 			<!-- Header //-->
-			<h1>Kristi's piano<div style="float: right"> number of tracks<select ><option>1</option><select></div></h1>
+			<h1>Kristi's piano<div id="userTrackNumberdiv" style="float: right"> number of tracks
+			<select id="userTrackNumber"> 
+			<option>1</option>
+			<option>2</option>
+			<option>3</option>
+			<option>4</option>
+			<select></div></h1>
 			
 					<!-- Menu tabs - No need to edit //-->
   					<ul class="nav nav-tabs nav-justified" id="menu">
@@ -52,9 +58,9 @@
 								<a href="" id="welcome">Welcome</a>
 							</li>
 							
-							<li>
+							<!--<li>
 								<a href="" id="play">Play</a>
-							</li>
+							</li>-->
 						</ul>
 				
 				
@@ -75,12 +81,7 @@
    							<br />
     					</div>
     
-    					<div class="play"  id="playTab" style="display: none;">
-						<div id="player">
-						<div class="button playerElement" id="recordButton" ><div class="light"></div><div class="text">REC</div></div>
-						<div class="timer playerElement" id="recordingTimer">0:00.00</div>
-						<div class="button playerElement" id="playButton"><div class="triangle"><div></div></div></div>
-    					</div>			
+    							
 			
     					</div>
 					</div>

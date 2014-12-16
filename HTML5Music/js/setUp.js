@@ -1,21 +1,31 @@
 $(document).ready(setUp); // End Document Ready
+var colorTable=["red", "green", "blue","yellow"]
+var song;
 function setUp()
 {
-setUpPlay();
-tabSwitch();
-changeInstrument();
-$("#userInstrument option:selected").onchange(changeInstrument);
- 
- 
+//setUpPlay();
+//changeInstrument();
+ song=new Song(); 
+//song.createTracks($('#userTrackNumber option:selected').val());
+$("#userTrackNumber").change(song.displayTracks);
+//song.createTracks(4);
+song.displayTracks(); 
+hideTabs("welcome");
+
  }
-function changeInstrument()
+ 
+function hideTabs(notToHide)
 {
-var name=$("#userInstrument option:selected").text();
- 
- var instrument=buildInstrument(name);
- 
- instrument.build();
-}		
+	/*$('#content_container').find("#content > div").each(
+	function()
+	{	var s=this.className;
+		var t=notToHide;
+		if(this.className!==notToHide)
+			$(this).attr("style","display:none");
+	});*/
+	$("#"+notToHide).trigger("click");
+	
+}
 		
 function tabSwitch()
 {
