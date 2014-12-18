@@ -1,41 +1,50 @@
 /*Timer.js*/
-var currentTime;
-var interval;
-Timer=function()
+var CurrentTimer;
+Timer=function(intrval,GUIid)
 {
-	currentTime=0;
+	this.currentTime=0;
+	this.intervalTime=intrval;
+	this.GUI=GUIid;
+	this.incrementEvent=new Event('increment',{});
+	window.addEventListener('increment',this.increment);
 	console.log("ConstructTime:"+currentTime);
-}
+
 
 Timer.prototype.start=function()
 {
-	currentTime=0;
-	//console.log("Time started:"+currentTime);
-	interval=setInterval(increment,10);
+	CurrentTimer=this;
+	this.currentTime=0;
+	//alert("Time started:"+this.currentTime);
+	this.interval=setInterval(this.increment,this.intervalTime);
 }
-function increment(event)
+ Timer.prototype.increment=function()
 {
-	currentTime++;
-	//console.log("CurrentTime:"+currentTime);
-	$("#recordingTimer").text(getMinuteString());
+	CurrentTimer.currentTime++;
+	//console.log("CurrentTime:"+this.currentTime);
+	$("#"+CurrentTimer.GUI).text(CurrentTimer.toString());
+}
+Timer.prototype.dispatchIncrement=function(evt)
+{
+	dispatchEvent(evt);
 } 
 Timer.prototype.stop=function()
 {
-	clearInterval(interval);
-	//console.log("Timestopped:"+currentTime);
+	clearInterval(this.interval);
+	//alert("Timestopped:");
 	
 }
 Timer.prototype.getTime=function()
 {
 	return currentTime;
 }
-function getMinuteString()
+Timer.prototype.toString=function()
 { var time;
-	var minutes=Math.floor(currentTime/60000);
-	time=currentTime%60000;
+	var minutes=Math.floor(CurrentTimer.currentTime/60000);
+	time=CurrentTimer.currentTime%60000;
 	var seconds=Math.floor(time/100);
 	time=time%100;
 	//console.log("Minutes: "+minutes+" Seconds: "+seconds+" mili: "+time);
 	return ""+minutes+":"+seconds+"."+time;
 
 }
+};

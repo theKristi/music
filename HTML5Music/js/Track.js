@@ -7,8 +7,10 @@ Track=function(trackNum)
 	this.notes=[];
 	this.displayed=false;
 	this.color=colorTable[trackNum-1];
-	this.timer=new Timer(this.name);
+	this.timer=new Timer(10,this.name+"recordingTimer");
 	this.recording=false;
+	
+	//console.log("making"+this.name);
 }
 function Note(id, time)
 {
@@ -24,24 +26,30 @@ Track.prototype.createTab=function()
 {
 //add tab
 	var $trackTab="<li id='"+this.name+"tab'class='' style='background:"+this.color+"'>\
-					<a href='' id='"+this.name+"'>"+this.name+"</a>\
+					<a href='' id='"+this.name+"'style='background:"+this.color+"'>"+this.name+"</a>\
 							</li>"
 		$("#menu").append($trackTab);
 	
 		
 	//add content
 	var $trackPlayer="<div class='"+this.name+"'  id='track' >\
-	<div id='trackColor' style='background:"+this.color+"'></div>\
+	<div id='trackColor' style='background:"+this.color+"'><label class='userInstrument'>Instrument:  <Select id='"+this.name+"Instrument'>\
+								<option>Piano</option>\
+								</Select></label></div>\
 	<div id='player'>\
 	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>REC</div></div>\
 						<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
 						<div class='button playerElement playButton' id='"+this.name+"playButton'><div class='triangle'><div></div></div>\
 						</div>\
     					</div>\	"
-
+	
+	
 		$("#content").append($trackPlayer);
+		this.changeInstrument();
 		this.displayed=true;
 		this.setEventHandlers();
+		
+		
 	
 }
 Track.prototype.removeTab=function()
@@ -54,13 +62,17 @@ Track.prototype.removeTab=function()
 }
 /************************************End Create/remove GUI tab***************************************/
 /************************************Attribute Setters***********************************************/
+Track.prototype.initInstrument=function(tab)
+{
+	var name=$("#"+tab.name+"Instrument option:selected").text();
+tab.instrument=buildInstrument(name); 
+tab.instrument.build(tab.name);
+}
 Track.prototype.changeInstrument=function()
 {
 var name=$("#"+this.name+"Instrument option:selected").text();
- 
-  instrument:buildInstrument(name);
- 
-  this.instrument.build();
+this.instrument=buildInstrument(name);
+ this.instrument.build(this.name);
 }
 /*************************************End Attribute setters******************************************/
 /*************************************recording handlers*********************************************/
@@ -76,22 +88,24 @@ Track.prototype.saveNote=function(note,time)
 
 function recMouseUp(event)
 {
-var track=event.data;
-	if(!recording)
+var divid=this.id;
+var trackNum=parseInt(divid.charAt(5));
+var track=song.tracks[trackNum-1];
+	if(!track.recording)
 	{
 	track.notes=[];
 	track.timer.start();
 	console.log("recording "+track.name);
 	$(".light").addClass("glow");
-	$("#"+track.name+"recordButton").addClass("pressed");
+	$("#"+divid).addClass("pressed");
 	track.recording=true;
 	}
 	else
 	{
 		$(".light").removeClass("glow");
-		$("#"+track.name+"recordButton").removeClass("pressed");
+		$("#"+divid).removeClass("pressed");
 		track.recording=false;
-		console.log("!recording "+track.name);
+		//alert("!recording "+track.name);
 		track.timer.stop();
 	
 	}
@@ -107,7 +121,8 @@ function playMouseUp()
 }
 Track.prototype.setEventHandlers=function()
 {
-	$("#"+this.name+"recordButton").click(this,recMouseUp);
+	$("#"+this.name+"recordButton").on("click",recMouseUp);
+	$("#"+this.name+"Instrument").change(this.changeInstrument);
 	//$("#"+this.name+"playButton").click(this.playMouseUp);
 
 }

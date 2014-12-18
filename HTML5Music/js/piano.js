@@ -1,28 +1,29 @@
 /*piano.js build piano gui, and handles playing piano audio*/
-
+var pianoLoaded=false;
 var whiteNoteDictionary=["C","D","E","F","G","A","B"];
 var blackNoteDictionary=["Db","Eb","Gb","Ab","Bb"];
 Piano=function()
 {
 midiNumber:0;
+this.loaded=false;
 }
 Piano.prototype.build=function(tab)
 {
-	$("."+tab).append("<div id='pianoBody'></div>");
+	$("."+tab).append("<div id='"+tab+"pianoBody'></div>");
 	//$("#pianoBody").append("<div id='pianoSounds' style='display:none;'></div>");
 	$("#content_container").mouseup(keymouseup);
-	buildOctaves();
-	loadSound();
+	this.buildOctaves(tab);
+	
 }//end buildPiano
-function addSound(keyid)
+Piano.prototype.addSound=function(keyid)
 {
 	//add white keys
 
 	//$("#pianoSounds").append("<audio preload='auto' id='"+keyid+"_sound' controls><source src='sondfonts/acoustic_grand_piano-mp3/"+keyid+".mp3' type='audio/mpeg'></audio>");
 //console.log("trying to play: "+keyid);
-	$("#"+keyid).mousedown([keyid],keymousedown);
-	$("#"+keyid).mouseenter([keyid],keymouseenter);
-	$("#"+keyid).mouseout([keyid],keymouseout);
+	$("#"+keyid).mousedown([keyid,this],this.keymousedown);
+	$("#"+keyid).mouseenter([keyid,this],this.keymouseenter);
+	$("#"+keyid).mouseout([keyid,this],this.keymouseout);
 	//$("#"+keyid+"_sound").on("ended",[keyid],noteEnded);
 	
 
@@ -37,26 +38,25 @@ function keymouseup(event)
 	$(".keyWhite").css("background", "");
 	$(".keyBlack").css("background", "");
 }
-function keymousedown(event)
+Piano.prototype.keymousedown=function(event)
 {
 	mouseDown=true;
-	//console.log("playing: "+event.data[0]);
+	//alert("playing: "+event.data[0]);
 	var keyid=event.data[0];
-	$("#"+keyid).css("background", "red");
-	playNote(event.data[0]);
+	$("#"+keyid).css("background", song.tracks[parseInt(event.data[0].charAt(0))-1].color);
+	event.data[1].playNote(event.data[0].substring(1));
 }
-function keymouseenter(event)
+Piano.prototype.keymouseenter=function(event)
 {
-	var keyid=event.data[0];
+	var keyid=event.data[0].substring(1);
 	if(mouseDown)
 	{
 			
-		playNote(keyid);
-		var keyid=event.data[0];
-	$("#"+keyid).css("background", "red");
+		event.data[1].playNote(keyid);
+	$("#"+event.data[0]).css("background", song.tracks[parseInt(event.data[0].charAt(0))-1].color);
 	}
 }
-function keymouseout(event)
+Piano.prototype.keymouseout=function(event)
 {
 if(mouseDown)
 	{
@@ -65,17 +65,18 @@ if(mouseDown)
 	}
 }
 
-function loadSound()
+Piano.prototype.loadSound=function()
 {MIDI.loadPlugin({
 		soundfontUrl: "./soundfont/",
 		instrument: "acoustic_grand_piano",
 		callback: function() {
-			console.log("piano loaded");
+			pianoLoaded=true;
+			//alert("pianoLoaded");
 			
 		}
 	});
 	}
-function playNote(keyid)
+Piano.prototype.playNote=function(keyid)
 {
 	//
 	var note=MIDI.keyToNote[keyid];
@@ -86,10 +87,7 @@ var delay = 0;
 			// play the note
 			MIDI.setVolume(0, 127);
 			MIDI.noteOn(0, note, velocity, delay);
-	if(recording)
-	{
-		saveNote(note);
-	}
+	
 	/*var sound= document.getElementById(keyid+"_sound");
 	sound.pause();
 	if(sound.currentTime!=0)
@@ -104,50 +102,55 @@ var delay = 0;
 
 	
 }
-function buildOctaves()
+Piano.prototype.buildOctaves=function(tab)
 { 
- for(i=0;i<9;i++)
+ for(j=0;j<9;j++)
  {	
- var octaveid="o"+i;
+ var octaveid=tab+"o"+j;
 
- $("#pianoBody").append("<div id="+octaveid+" class='octave'></div>")
-	if(i===0)
+ $("#"+tab+"pianoBody").append("<div id="+octaveid+" class='octave'></div>")
+ $("#"+tab+"pianoBody").addClass("pianoBody");
+	if(j===0)
 	{
-		addWhiteKeys(octaveid,i,2,50);
-		addBlackKey(octaveid,"Bb0",25,35.16)
+		this.addWhiteKeys(octaveid,j,2,50,tab.charAt(5));
+		this.addBlackKey(octaveid,tab.charAt(5)+"Bb0",25,35.16)
+		//$("#"+octaveid).removeClass("octave");
+		$("#"+octaveid).css({"width":"3.846%"});
 		
 	}
-	else if(i===8)
+	else if(j===8)
 	{
-		addWhiteKeys(octaveid,i,1,100);
+		this.addWhiteKeys(octaveid,j,1,100,tab.charAt(5));
+		//$("#"+octaveid).removeClass("octave");
+		$("#"+octaveid).css({"width":"1.923%"});
 		
 	}
 	else
 	{
-		addWhiteKeys(octaveid,i,7,undefined);
+		this.addWhiteKeys(octaveid,j,7,undefined,tab.charAt(5));
 		var flatsID=octaveid+"_flats";
 		$("#"+octaveid).append("<div class='flats' id="+flatsID+"></div>")
-		addBlackKeys(flatsID,i);
+		this.addBlackKeys(flatsID,j,tab.charAt(5));
 	}
 
  }
  
 }
-function addWhiteKeys(octave,index,numberToAdd, width)
+Piano.prototype.addWhiteKeys=function(octave,index,numberToAdd, width,trackNum)
 {
 	var y=0;
 	while(y<numberToAdd)
 	{
 	var id;
 	if(index!=0)
-		id=whiteNoteDictionary[y]+index;
+		id=trackNum+whiteNoteDictionary[y]+index;
 	else
-		id=whiteNoteDictionary[y+5]+index;
-	addWhiteKey(octave,id,width);
+		id=trackNum+whiteNoteDictionary[y+5]+index;
+	this.addWhiteKey(octave,id,width);
 	y++;
 	}
 }
-function addWhiteKey(octave,id,width)
+Piano.prototype.addWhiteKey=function(octave,id,width)
 {
 	var key;
 	if(width!=undefined)
@@ -161,19 +164,19 @@ function addWhiteKey(octave,id,width)
 	<div class='keyWhite' id="+id+"></div>";
 	}
 	$("#"+octave).append(key);
-	addSound(id);
+	this.addSound(id);
 
 } 
-function addBlackKeys(flatOctave,index)
+Piano.prototype.addBlackKeys=function(flatOctave,index,trackNum)
 {
 	var v=0
 	while(v<5)
 	{ 
-	 addBlackKey(flatOctave,blackNoteDictionary[v]+index,undefined,undefined);
+	 this.addBlackKey(flatOctave,trackNum+blackNoteDictionary[v]+index,undefined,undefined);
 	 v++;
 	}
 }
-function addBlackKey(octave,id,width,left)
+Piano.prototype.addBlackKey=function(octave,id,width,left)
 {
 	var key;
 	if(width!=undefined && left!=undefined)
@@ -187,5 +190,5 @@ function addBlackKey(octave,id,width,left)
 	<div class='keyBlack' id="+id+"></div>";
 	}
 	$("#"+octave).append(key);
-	addSound(id);
+	this.addSound(id);
 }

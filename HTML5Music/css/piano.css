@@ -1,6 +1,6 @@
 /*piano.css*/
 
-#pianoBody
+.pianoBody
 {
 	
 	width:100%;
@@ -9,11 +9,11 @@
 	/*position:fixed;*/
     cursor:pointer;
 }
-#o0
+.o0
 {
 width:3.846%;
 }
-#o8
+.o8
 {
 width:1.923%;
 }

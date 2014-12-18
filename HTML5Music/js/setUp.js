@@ -16,13 +16,7 @@ hideTabs("welcome");
  
 function hideTabs(notToHide)
 {
-	/*$('#content_container').find("#content > div").each(
-	function()
-	{	var s=this.className;
-		var t=notToHide;
-		if(this.className!==notToHide)
-			$(this).attr("style","display:none");
-	});*/
+	
 	$("#"+notToHide).trigger("click");
 	
 }
@@ -51,5 +45,6 @@ function tabSwitch()
     					}
     				);
 				});
+				
 }//end tabSwitch
 

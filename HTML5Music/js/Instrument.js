@@ -3,6 +3,11 @@
 function buildInstrument(name)
 {
 	if (name=='Piano')
-		return new Piano();
+	{
+		var p= new Piano();
+		if(!pianoLoaded)
+		p.loadSound();
+		return p;
+	}
 
 }
