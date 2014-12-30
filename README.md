@@ -1,4 +1,4 @@
 music
 =====
 
-just a general music project working withe html audio
+A project to begin browser generation of music using midi.js, jsmidi, and some other fancyness
