@@ -48,6 +48,10 @@ Track.prototype.createTab=function()
 		this.changeInstrument();
 		this.displayed=true;
 		this.setEventHandlers();
+		if(this.timer.currentTime!==0)
+		{
+			$("#"+this.name+"recordingTimer").text(this.timer);
+		}
 		
 		
 	
@@ -62,12 +66,7 @@ Track.prototype.removeTab=function()
 }
 /************************************End Create/remove GUI tab***************************************/
 /************************************Attribute Setters***********************************************/
-Track.prototype.initInstrument=function(tab)
-{
-	var name=$("#"+tab.name+"Instrument option:selected").text();
-tab.instrument=buildInstrument(name); 
-tab.instrument.build(tab.name);
-}
+
 Track.prototype.changeInstrument=function()
 {
 var name=$("#"+this.name+"Instrument option:selected").text();
@@ -82,6 +81,11 @@ Track.prototype.saveNote=function(note,time)
  
  console.log("saving note:"+note);
  notes.push(n);
+}
+Track.prototype.notePlayed=function(note)
+{
+	if(this.recording)
+		this.saveNote(note,this.timer.getTime());
 }
 /*************************************End recording handlers******************************************/
 /*************************************Track Player handlers*******************************************/

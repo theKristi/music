@@ -24,12 +24,17 @@ Piano.prototype.addSound=function(keyid)
 	$("#"+keyid).mousedown([keyid,this],this.keymousedown);
 	$("#"+keyid).mouseenter([keyid,this],this.keymouseenter);
 	$("#"+keyid).mouseout([keyid,this],this.keymouseout);
+	//$("#"+keyid).on("tap",[keyid,this],tap);
+	
 	//$("#"+keyid+"_sound").on("ended",[keyid],noteEnded);
 	
 
 	
 }
-
+function tap(event)
+{
+	alert("tapped"+event.data[0]);
+}
 function keymouseup(event)
 {
 	mouseDown=false;
@@ -44,15 +49,15 @@ Piano.prototype.keymousedown=function(event)
 	//alert("playing: "+event.data[0]);
 	var keyid=event.data[0];
 	$("#"+keyid).css("background", song.tracks[parseInt(event.data[0].charAt(0))-1].color);
-	event.data[1].playNote(event.data[0].substring(1));
+	event.data[1].playNote(keyid);
 }
 Piano.prototype.keymouseenter=function(event)
 {
-	var keyid=event.data[0].substring(1);
+
 	if(mouseDown)
 	{
 			
-		event.data[1].playNote(keyid);
+		event.data[1].playNote(event.data[0]);
 	$("#"+event.data[0]).css("background", song.tracks[parseInt(event.data[0].charAt(0))-1].color);
 	}
 }
@@ -76,10 +81,12 @@ Piano.prototype.loadSound=function()
 		}
 	});
 	}
-Piano.prototype.playNote=function(keyid)
+Piano.prototype.playNote=function(trackkeyid)
 {
-	//
+	var keyid=trackkeyid.substring(1);
+	var trackNum=parseInt(trackkeyid.charAt(0))-1;
 	var note=MIDI.keyToNote[keyid];
+	song.tracks[trackNum].notePlayed(keyid);
 //console.log("playing: "+note);
 var delay = 0; 
 

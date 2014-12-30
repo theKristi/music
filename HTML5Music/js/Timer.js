@@ -39,8 +39,8 @@ Timer.prototype.getTime=function()
 }
 Timer.prototype.toString=function()
 { var time;
-	var minutes=Math.floor(CurrentTimer.currentTime/60000);
-	time=CurrentTimer.currentTime%60000;
+	var minutes=Math.floor(this.currentTime/60000);
+	time=this.currentTime%60000;
 	var seconds=Math.floor(time/100);
 	time=time%100;
 	//console.log("Minutes: "+minutes+" Seconds: "+seconds+" mili: "+time);
