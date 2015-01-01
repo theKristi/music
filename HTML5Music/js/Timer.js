@@ -7,8 +7,7 @@ Timer=function(intrval,GUIid)
 	this.GUI=GUIid;
 	this.incrementEvent=new Event('increment',{});
 	window.addEventListener('increment',this.increment);
-	console.log("ConstructTime:"+currentTime);
-
+	
 
 Timer.prototype.start=function()
 {
@@ -35,7 +34,7 @@ Timer.prototype.stop=function()
 }
 Timer.prototype.getTime=function()
 {
-	return currentTime;
+	return this.currentTime;
 }
 Timer.prototype.toString=function()
 { var time;

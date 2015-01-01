@@ -1,6 +1,10 @@
-/****Track.js******/
-//needs click 
-//needs instrument
+/*Track.js*/
+ 
+/*
+*This function is a constructor for the track object
+*@param{integer} this is the index of the track in the song.tracks array plus 1 
+*to make it 1 based for naming purposes
+*/
 Track=function(trackNum)
 {
 	this.name="track"+trackNum;
@@ -9,9 +13,16 @@ Track=function(trackNum)
 	this.color=colorTable[trackNum-1];
 	this.timer=new Timer(10,this.name+"recordingTimer");
 	this.recording=false;
+	this.instrument="";
 	
 	//console.log("making"+this.name);
 }
+
+/*
+*This is a function that defines a data structure for a Note 
+*@param id{String} the name of the Note.
+*@param time{Integer} the time(in milliSeconds) which the note was played
+*/
 function Note(id, time)
 {
  this.note=id;
@@ -22,6 +33,11 @@ function Note(id, time)
 }
 
 /****************************create/remove Gui tab *********************************/
+
+/*
+*This function creates all the html for a tab which represents a track, and adds it to the tabs currently being displayed.
+*it grabs all of its data from the track attributes to which this function belongs.  
+*/
 Track.prototype.createTab=function()
 {
 //add tab
@@ -56,6 +72,10 @@ Track.prototype.createTab=function()
 		
 	
 }
+
+/*
+*This function removes tab content from those being displayed.
+*/
 Track.prototype.removeTab=function()
 {
 	
@@ -66,7 +86,9 @@ Track.prototype.removeTab=function()
 }
 /************************************End Create/remove GUI tab***************************************/
 /************************************Attribute Setters***********************************************/
-
+/*
+*This function is the onChange event handler for the "instrument" selector found in each track
+*/
 Track.prototype.changeInstrument=function()
 {
 var name=$("#"+this.name+"Instrument option:selected").text();
@@ -75,13 +97,22 @@ this.instrument=buildInstrument(name);
 }
 /*************************************End Attribute setters******************************************/
 /*************************************recording handlers*********************************************/
+/*
+*This function saves a note that has been played to this tracks note array  
+*@param note{String} the name of the Note to be saved.
+*@param time{Integer} the time(in milliSeconds) which the note to be saved was played.
+*/
 Track.prototype.saveNote=function(note,time)
 {
  var n=new Note(note, time);
  
  console.log("saving note:"+note);
- notes.push(n);
+ this.notes.push(n);
 }
+/*
+*This function handles what happens when a note is played in the track
+*@param note{String} the name of the note played.
+*/
 Track.prototype.notePlayed=function(note)
 {
 	if(this.recording)
@@ -89,7 +120,10 @@ Track.prototype.notePlayed=function(note)
 }
 /*************************************End recording handlers******************************************/
 /*************************************Track Player handlers*******************************************/
-
+/*
+*This function handles what happens when the record button is pressed 
+*  changes the button look, starts/stops this tracks timer, and sets this tracks recording flag attribute. 
+*/
 function recMouseUp(event)
 {
 var divid=this.id;
@@ -115,6 +149,11 @@ var track=song.tracks[trackNum-1];
 	}
 	
 }
+/*
+*This function handles what happens when the play button is clicked
+*changes look to pressed
+*/
+/**TODO: Functionality needs to be added when playback is actually possible**/
 function playMouseUp()
 {
 	if($("#"+this.name+"playButton").hasClass("pressed"))
@@ -123,6 +162,10 @@ function playMouseUp()
 		$("#"+this.name+"playButton").addClass("pressed");
 
 }
+
+/*
+*This function sets the event handlers for this track's elements
+*/
 Track.prototype.setEventHandlers=function()
 {
 	$("#"+this.name+"recordButton").on("click",recMouseUp);

@@ -1,26 +1,36 @@
+/*his is the setup for the main driver*/ 
 $(document).ready(setUp); // End Document Ready
+/*Global variables*/
+/*colorTable: this is the array that defines the color for each track*/
 var colorTable=["red", "green", "blue","yellow"]
+/*song:the data structure that holds everything "song" related*/
 var song;
+/*
+*This function creates the song and the corresponding tabs.
+* Also sets the onChange event handler for the "number of voices" selector
+*/
 function setUp()
 {
-//setUpPlay();
-//changeInstrument();
+
  song=new Song(); 
-//song.createTracks($('#userTrackNumber option:selected').val());
 $("#userTrackNumber").change(song.displayTracks);
-//song.createTracks(4);
 song.displayTracks(); 
 hideTabs("welcome");
 
  }
- 
+ /*
+ * This function hides all tabs content except the parameter
+ *@param notToHide {string} id of the content tab you don't want to hide.(The one you want to show)
+ */
 function hideTabs(notToHide)
 {
 	
 	$("#"+notToHide).trigger("click");
 	
 }
-		
+/*
+* handles displaying the content based on which tab has been clicked.
+*/		
 function tabSwitch()
 {
 		$('#menu').find("li a").on('click',function(e)

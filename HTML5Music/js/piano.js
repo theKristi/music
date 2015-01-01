@@ -1,5 +1,6 @@
 /*piano.js build piano gui, and handles playing piano audio*/
 var pianoLoaded=false;
+var mouseDown;
 var whiteNoteDictionary=["C","D","E","F","G","A","B"];
 var blackNoteDictionary=["Db","Eb","Gb","Ab","Bb"];
 Piano=function()
