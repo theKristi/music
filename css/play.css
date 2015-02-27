@@ -1,0 +1,68 @@
+html, body {
+    		height: 100%;
+    		margin: 0;
+    	}
+		
+#main_container
+{
+	height:100%;
+}
+#content_container
+{
+	height:100%;
+	width:100%;
+}	
+#content
+{
+	height:100%;
+	width:100%;
+}			
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+#track
+{
+	
+	height:100%;
+	width:100%;
+}
+.playerElement
+{
+	float:left;
+	
+}
+#player
+{
+height:20%;
+background:#333333;	
+}
+#trackColor
+{
+	height:5%;
+}
+
+/*************************************************************************Timer*********************************************/
+.timer
+{
+	height:30%;
+	width: 7%;
+	margin-left:2%;
+	margin-top:1.5%;
+	border-radius:5px;
+	background-color:#540000;
+	font-size:4vh;
+	color:red;
+	text-align:center;
+	vertical-align:middle; 
+}
+.userInstrument
+{
+position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}

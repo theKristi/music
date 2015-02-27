@@ -1,0 +1,65 @@
+// Page Variables
+@mainWidth: 80%;
+@backgroundColor: #FFF;
+@backgroundImage: "images/background.png";
+@fontStyle: 14px 'PT Sans', sans-serif;
+@fontColor: #222;
+@borderColor: #DDD;
+
+a, a:hover, a:focus, a:active
+{
+  outline: 0;
+}
+
+body
+{
+  background: url(@backgroundImage);
+  background-repeat: repeat;
+}
+
+#main_container
+{
+	margin-top: 20px;
+	margin-left: 10%;
+	width: @mainWidth;
+}
+
+.roundBottom(@radius: 5px, @color: @borderColor)
+{
+   border-radius: 0 0 @radius @radius;
+  -moz-border-radius: 0 0 @radius @radius;
+  -webkit-border-radius: 0 0 @radius @radius;
+  border-left: 1px solid @color;
+  border-right: 1px solid @color;
+  border-bottom: 1px solid @color;
+}
+
+#content
+{
+   background: @backgroundColor;
+	.roundBottom();
+	font: @fontStyle;
+	color: @fontColor;
+	margin-top: -21px;
+	padding: 1px;
+	height: 50%;
+	z-index: 0;
+}
+
+#content > div
+{
+  margin-left: 10px;
+}
+
+
+
+#content div > div label,#content div > div button
+{
+  margin-right: 12px;
+  margin-bottom: 15px;
+}
+
+textarea
+{
+  width: 95%;
+}

@@ -1,0 +1,135 @@
+.button
+{
+	border-radius:50px;
+	 background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 11%, rgb(129,128,128) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 11%, rgb(129,128,128) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 11%, rgb(129,128,128) 100%);
+ box-shadow: 11px 19.053px 32px 0px rgb( 0, 0, 0 );
+ margin-left:1%;
+ margin-top:1%;
+ color:white;
+}
+
+.pressed
+{
+
+box-shadow: 0px 0px 0px 0px rgb( 0, 0, 0 );
+ background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+
+}
+.button:hover
+{
+	cursor:pointer;
+	/*background:gray;*/
+}
+/*************************************************************************recordButton*********************************************/
+.recordButton
+{
+	width:10%;
+	height:40%;
+	
+	position:relative;
+
+	
+	
+  
+}
+
+.text
+{
+	
+	font-size:4vh;
+  font-family: "Plantagenet Cherokee";
+  color: white;
+  text-align: center;
+  position:relative;
+  
+  top:-40%;
+  left:5%;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    
+}
+.light {
+  border-radius: 50%;
+  background-image: -moz-radial-gradient( 50% 50%, circle closest-side, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(238,32,32) 0%, rgb(238,32,32) 33%, rgb(238,32,32) 44%, rgb(167,9,9) 96%);
+  background-image: -webkit-radial-gradient( 50% 50%, circle closest-side, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(238,32,32) 0%, rgb(238,32,32) 33%, rgb(238,32,32) 44%, rgb(167,9,9) 96%);
+  background-image: -ms-radial-gradient( 50% 50%, circle closest-side, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(167,9,9) 0%, rgb(238,32,32) 0%, rgb(238,32,32) 33%, rgb(238,32,32) 44%, rgb(167,9,9) 96%);
+ 
+ position:relative;
+ left:10%;
+ top:15%;
+  height: 30%;
+  width: 20%;
+    height:0;
+    padding-bottom: 20%;
+    -moz-border-radius: 50%; 
+    -webkit-border-radius: 50%; 
+    border-radius: 50%;
+}
+.glow
+{
+	
+	-webkit-box-shadow: 0px 0px 15px 5px rgba(255, 255, 190, .75);
+-moz-box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
+box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
+  
+}
+/*********************************************************************End recordButton*********************************************/
+/*********************************************************************play Button**************************************************/
+.playButton
+{
+	height:40%;
+	width:5%;
+}
+.playButton:active
+{
+	box-shadow: 0px 0px 0px 0px rgb( 0, 0, 0 );
+ background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+}
+.triangle
+{
+	margin-top:10%; margin-right:auto;margin-bottom:0; margin-left:auto;
+	 width: 0;
+    height: 0;
+    padding-top: 25%;
+    padding-bottom: 25%;
+    padding-left: 25%;
+    overflow: hidden;
+}
+.triangle div
+{
+	width: 0; 
+    height: 0;
+    margin-top:-500px;
+    margin-left: -500px;
+     
+    border-top: 500px solid transparent;
+    border-bottom: 500px solid transparent;
+    border-left: 500px solid rgba(255,255,255,.80);
+	
+}
+/******************************************************************End play Button**************************************************/
+/******************************************************************save Button******************************************************/
+.saveButton
+{
+	height:40%;
+	width:7%;
+	font-size:4vh;
+  font-family: "Plantagenet Cherokee";
+  color: white;
+  text-align: center;
+  position:relative;
+}
+.saveButton:active
+{
+box-shadow: 0px 0px 0px 0px rgb( 0, 0, 0 );
+ background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+}
