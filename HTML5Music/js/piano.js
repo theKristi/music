@@ -1,24 +1,27 @@
-/*piano.js build piano gui, and handles playing piano audio*/
+/**piano.js build piano gui, and handles playing piano audio**/
 
-/*global flag to be sure piano soundfont was loaded*/
+/**global flag to be sure piano soundfont was loaded**/
 var pianoLoaded=false;
-/*global flag to tell if left mouse button is down for play fluidity*/
+
+/**global flag to tell if left mouse button is down for play fluidity**/
 var mouseDown;
-/*array used for naming white keys on the keyboard*/
+
+/**array used for naming white keys on the keyboard**/
 var whiteNoteDictionary=["C","D","E","F","G","A","B"];
-/*array used for naming black keys on the keyboard*/
+
+/**array used for naming black keys on the keyboard**/
 var blackNoteDictionary=["Db","Eb","Gb","Ab","Bb"];
 
-/*
+/**
 *This function is a constructor for the piano
 */
 Piano=function()
 {
-//midiNumber is a global variable used of identifying the instrument in midi.js
+//midiNumber is an attribute used of identifying the instrument in midi.js
 midiNumber:0;
 }
 
-/*
+/**
 * This function drives building the piano
 *@param tab{String} the tab on which to build the piano
 */
@@ -68,6 +71,7 @@ function keymouseup(event)
 */
 Piano.prototype.keymousedown=function(event)
 {
+	event.preventDefault();
 	mouseDown=true;
 	var keyid=event.data[0];
 	$("#"+keyid).css("background", song.tracks[parseInt(event.data[0].charAt(0))-1].color);

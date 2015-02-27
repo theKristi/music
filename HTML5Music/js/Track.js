@@ -11,7 +11,7 @@ Track=function(trackNum)
 	this.notes=[];
 	this.displayed=false;
 	this.color=colorTable[trackNum-1];
-	this.timer=new Timer(10,this.name+"recordingTimer");
+	this.timer=new Timer(10);
 	this.recording=false;
 	this.instrument="";
 	
@@ -23,9 +23,10 @@ Track=function(trackNum)
 *@param id{String} the name of the Note.
 *@param time{Integer} the time(in milliSeconds) which the note was played
 */
-function Note(id, time)
+function Note(id, time, channel)
 {
- this.note=id;
+ this.pitch=id;
+ this.channel=channel;
 	if (time!=undefined)
 		this.timePlayed=time;
 	else
@@ -55,6 +56,7 @@ Track.prototype.createTab=function()
 	<div id='player'>\
 	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>REC</div></div>\
 						<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
+						<div class='button playerElement saveButton' id='"+this.name+"saveButton'>SAVE</div>\
 						<div class='button playerElement playButton' id='"+this.name+"playButton'><div class='triangle'><div></div></div>\
 						</div>\
     					</div>\	"
@@ -68,7 +70,7 @@ Track.prototype.createTab=function()
 		{
 			$("#"+this.name+"recordingTimer").text(this.timer);
 		}
-		
+	
 		
 	
 }
@@ -104,7 +106,7 @@ this.instrument=buildInstrument(name);
 */
 Track.prototype.saveNote=function(note,time)
 {
- var n=new Note(note, time);
+ var n=new Note(note, time,this.trackNum);
  
  console.log("saving note:"+note);
  this.notes.push(n);
@@ -145,6 +147,7 @@ var track=song.tracks[trackNum-1];
 		track.recording=false;
 		//alert("!recording "+track.name);
 		track.timer.stop();
+		console.log("stop");
 	
 	}
 	
@@ -156,13 +159,24 @@ var track=song.tracks[trackNum-1];
 /**TODO: Functionality needs to be added when playback is actually possible**/
 function playMouseUp()
 {
-	if($("#"+this.name+"playButton").hasClass("pressed"))
-		$("#"+this.name+"playButton").removeClass("pressed");
-	else
-		$("#"+this.name+"playButton").addClass("pressed");
-
+	
+	var sound=$("#lowClick")[0];
+	sound.play();
 }
-
+/*
+*This function handles what happens when the save button is pressed
+*/
+Track.prototype.saveMouseUp=function(event)
+{
+	var track=event.data[0];
+	if(track.notes.length===0)
+		alert("There is no track to save.");
+	else 
+	{
+		//jsmidi stuff here
+		
+	}
+}
 /*
 *This function sets the event handlers for this track's elements
 */
@@ -170,6 +184,19 @@ Track.prototype.setEventHandlers=function()
 {
 	$("#"+this.name+"recordButton").on("click",recMouseUp);
 	$("#"+this.name+"Instrument").change(this.changeInstrument);
-	//$("#"+this.name+"playButton").click(this.playMouseUp);
+	$("#"+this.name+"saveButton").click([this],this.saveMouseUp);
+	this.timer.addListener(updateTimer,[this.timer,this.name+"recordingTimer"]);
+	$("#"+this.name+"playButton").click(playMouseUp);
 
+}
+/**
+*This function handles what happens to update the timer
+*@param timerArray{Array} an array of params that really just holds the timer to update.
+**/
+function updateTimer(timerArray)
+{
+	var timer=timerArray[0];
+	var name=timerArray[1];
+console.log("updateTimer:"+timer)
+	$("#"+name).text(timer);
 }

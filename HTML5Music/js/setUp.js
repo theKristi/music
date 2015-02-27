@@ -57,4 +57,10 @@ function tabSwitch()
 				});
 				
 }//end tabSwitch
+function updateTimer(timerArray)
+{
+	var timer=timerArray[0];
+//console.log("updateTimer:"+timer)
+	$("#timer"+(timer.ID+1)).text(timer);
+}
 
