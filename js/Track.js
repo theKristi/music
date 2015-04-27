@@ -25,12 +25,12 @@ Track=function(trackNum)
 */
 function Note(id, time, channel)
 {
- this.pitch=id;
+ this.pitch=noteTable[id];
  this.channel=channel;
 	if (time!=undefined)
 	{
 		this.timePlayed=time;
-		this.ticks=computeTicks(time)
+		this.duration=computeTicks(2000)
 	}
 	else
 		this.timePlayed=-1;
@@ -189,12 +189,12 @@ Track.prototype.saveMouseUp=function(event)
 	//send notes[] through MidiEvent.createNote(note) to create note Events.
 	var noteEvents=[];
 		track.notes.forEach(function(note) {
-    Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note.pitch));
+    Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note,true));
 });
 	//create new midi track from note events MidiTrack
 		var onetrack=new MidiTrack({ events: noteEvents });
 		var song  = MidiWriter({ tracks: [onetrack] });
-		song.save();
+		song.save(true);
 	}
 }
 /*

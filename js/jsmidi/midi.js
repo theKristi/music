@@ -198,6 +198,7 @@ var MidiWriter = function(config) {
             save: function(here) {
 			if(here)
 			{
+				window.location.href = "data:audio/midi;base64," + this.b64
 				/*var download=document.getElementById("download");
 				if(download===undefined)
 				{
