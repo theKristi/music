@@ -28,9 +28,21 @@ function Note(id, time, channel)
  this.pitch=id;
  this.channel=channel;
 	if (time!=undefined)
+	{
 		this.timePlayed=time;
+		this.ticks=computeTicks(time)
+	}
 	else
 		this.timePlayed=-1;
+}
+function computeTicks(milliseconds)
+{
+	//beats per minute
+	var bpm=parseInt($("#tempo").val());
+	//Ticks per beat (by default ticks per beat is 128 in jsmidi)
+	var tpb=128;
+	var ticks=(bpm*tpb*milliseconds)/60000;
+	return ticks;
 }
 
 /****************************create/remove Gui tab *********************************/
@@ -173,8 +185,16 @@ Track.prototype.saveMouseUp=function(event)
 		alert("There is no track to save.");
 	else 
 	{
-		//jsmidi stuff here
-		
+//jsmidi stuff here
+	//send notes[] through MidiEvent.createNote(note) to create note Events.
+	var noteEvents=[];
+		track.notes.forEach(function(note) {
+    Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note.pitch));
+});
+	//create new midi track from note events MidiTrack
+		var onetrack=new MidiTrack({ events: noteEvents });
+		var song  = MidiWriter({ tracks: [onetrack] });
+		song.save();
 	}
 }
 /*
