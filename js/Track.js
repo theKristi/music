@@ -186,17 +186,9 @@ Track.prototype.saveMouseUp=function(event)
 		alert("There is no track to save.");
 	else 
 	{
-//jsmidi stuff here
-	//send notes[] through MidiEvent.createNote(note) to create note Events.
-	var noteEvents=[];
-		track.notes.forEach(function(note) {
-    Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note,true));
-});
-	//create new midi track from note events MidiTrack
-		var onetrack=new MidiTrack({ events: noteEvents });
-		var song  = MidiWriter({ tracks: [onetrack] });
-		song.save(true);
+		song.makeSong([track]);
 	}
+
 }
 /*
 *This function sets the event handlers for this track's elements

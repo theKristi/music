@@ -58,7 +58,6 @@ Song.prototype.displayTracks=function()
 
 Song.prototype.makeSong=function(tracks)
 {
-	alert("makeSong");
 	/** TODO: Calculate duration*/
 //jsmidi stuff here
 	midiTracks=[]
