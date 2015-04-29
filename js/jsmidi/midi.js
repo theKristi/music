@@ -15,7 +15,7 @@ if (!window.console || !console.firebug) {
     }
 }
 
-var DEFAULT_VOLUME   = 90;
+var DEFAULT_VOLUME   = 120;
 var DEFAULT_DURATION = 128;
 var DEFAULT_CHANNEL  = 0;
 

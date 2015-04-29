@@ -159,7 +159,8 @@ var track=song.tracks[trackNum-1];
 		track.recording=false;
 		//alert("!recording "+track.name);
 		track.timer.stop();
-		console.log("stop");
+		if(track.notes.length!=0)
+			track.notes.push(new Note("C9",0, track.trackNum));
 	
 	}
 	

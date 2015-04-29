@@ -6,9 +6,8 @@ Song=function()
 {
 	this.tracks=new Array();
 	this.createTracks(4);
-	
 }
-
+/************************************************Song Gui******************************************************************************************/
 /*
 *This function creates and array of tracks based on the number passed in
 *@param numberToCreate{integer} the number of tracks to create
@@ -55,6 +54,26 @@ Song.prototype.displayTracks=function()
 	
 	
 }
+/****************************************************************End song Gui***************************************************************************/
 
-
-
+Song.prototype.makeSong=function(tracks)
+{
+	alert("makeSong");
+	/** TODO: Calculate duration*/
+//jsmidi stuff here
+	midiTracks=[]
+	for(var i=0;i<tracks.length;i++)
+	{
+			//send notes[] through MidiEvent.createNote(note) to create note Events.
+		var track=tracks[i];
+		var noteEvents=[];
+		track.notes.forEach(function(note) {
+    Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note,true));
+});
+	//create new midi track from note events MidiTrack
+		var onetrack=new MidiTrack({ events: noteEvents });
+		midiTracks.push(onetrack);
+	}	
+		var song  = MidiWriter({ tracks: midiTracks });
+		song.save(true);
+}
