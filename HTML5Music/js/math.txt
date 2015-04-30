@@ -1,0 +1,11 @@
+				#ofTicks X 60000
+  milliseconds= ----------------
+                 TPB X BPM
+
+  milliseconds(TPB X BPM)=#ofTicks X 60000
+  
+   milliseconds(TPB X BPM)
+  -------------------------=#ofTicks
+		60000
+		
+		

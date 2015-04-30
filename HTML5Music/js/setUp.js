@@ -11,7 +11,6 @@ var song;
 */
 function setUp()
 {
-
  song=new Song(); 
 $("#userTrackNumber").change(song.displayTracks);
 song.displayTracks(); 

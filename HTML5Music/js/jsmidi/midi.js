@@ -15,7 +15,7 @@ if (!window.console || !console.firebug) {
     }
 }
 
-var DEFAULT_VOLUME   = 90;
+var DEFAULT_VOLUME   = 120;
 var DEFAULT_DURATION = 128;
 var DEFAULT_CHANNEL  = 0;
 
@@ -198,6 +198,7 @@ var MidiWriter = function(config) {
             save: function(here) {
 			if(here)
 			{
+				window.location.href = "data:audio/midi;base64," + this.b64
 				/*var download=document.getElementById("download");
 				if(download===undefined)
 				{
@@ -246,7 +247,7 @@ var MidiEvent = function(params) {
 /**
  * Returns the list of events that form a note in MIDI. If the |sustained|
  * parameter is not specified, it creates the noteOff event, which stops the
- * note after it has been played, instead of keeping it playing.
+ *f note after it has been played, instead of keeping it playing.
  *
  * This method accepts two ways of expressing notes. The first one is a string,
  * which will be looked up in the global |noteTable| but it will take the

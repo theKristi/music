@@ -3,6 +3,9 @@
 	<head>
 		<title>Kristi's Music Project</title>
 
+		<!-- Icon-->
+		<link rel="shortcut icon" type="image/x-icon" href="images/TrebleClef.ico">
+		
 		<!-- Load in external CSS files //-->
         <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-responsive.css" />
 		<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css" />
@@ -36,6 +39,7 @@
 		<script src="soundfont/acoustic_grand_piano-ogg.js"></script>
 		<audio preload="auto" id="highClick"  src="Audio/highTapBottle.wav"></audio>
 		<audio preload="auto" id="lowClick"><source src="Audio/lowTapBottle.wav" type="audio/wav"></audio>
+		
     <meta charset="utf-8">
 	</head>
 	
@@ -45,13 +49,17 @@
 		<div class="container-fluid" id="main_container">
 			
 			<!-- Header //-->
-			<h1>Kristi's piano<div id="userTrackNumberdiv" style="float: right"> number of tracks
+			<h1>Kristi's piano
+		
+			<div id="userTrackNumberdiv" style="float: right"> number of tracks
 			<select id="userTrackNumber"> 
 			<option>1</option>
 			<option>2</option>
 			<option>3</option>
 			<option>4</option>
-			<select></div></h1>
+			<select></div>
+			<div id="userTempodiv"style=" width:30%; float:right; margin-right:10%;">Tempo <input style="width:20%" type="number" min="5" max="228" id="tempo" value="120"></div>
+			</h1>
 			
 					<!-- Menu tabs - No need to edit //-->
   					<ul class="nav nav-tabs nav-justified" id="menu">
@@ -68,9 +76,9 @@
 				<div class="row-fluid clearfix" id="content_container">
 					<div class="span12" id="content">
     					
-    					<div class="welcome">
+    					<div class="Song">
     						<fieldset>
-                                <legend>Welcome Screen.</legend>
+                                <legend>Song Stuff</legend>
                                 <br/>
                             </fieldset>
    							<br />

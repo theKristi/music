@@ -1,4 +1,5 @@
 /*Song.js is just a container for the tracks. Can create and display tracks*/
+
 /**TODO:needs "song" functions like download(), play(), pause(), stop()**/
 
 /*This function is the constructor for the song object*/
@@ -6,9 +7,8 @@ Song=function()
 {
 	this.tracks=new Array();
 	this.createTracks(4);
-	
 }
-
+/************************************************Song Gui******************************************************************************************/
 /*
 *This function creates and array of tracks based on the number passed in
 *@param numberToCreate{integer} the number of tracks to create
@@ -55,6 +55,25 @@ Song.prototype.displayTracks=function()
 	
 	
 }
-
-
-
+/****************************************************************End song Gui***************************************************************************/
+/**TODO:Add Documentaion**/
+function makeSongFromTracks(tracks)
+{
+	
+//jsmidi stuff here
+	midiTracks=[]
+	for(var i=0;i<tracks.length;i++)
+	{
+		//send notes[] through MidiEvent.createNote(note) to create note Events.
+		var track=tracks[i];
+		var noteEvents=[];
+		track.notes.forEach(function(note){Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note,true));});
+	
+		//create new midi track from note events MidiTrack
+		var onetrack=new MidiTrack({ events: noteEvents });
+		midiTracks.push(onetrack);
+	}	
+		var song  = MidiWriter({ tracks: midiTracks });
+		return song;
+		
+}
