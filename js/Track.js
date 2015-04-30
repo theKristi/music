@@ -30,7 +30,7 @@ function Note(id, time, channel)
 	if (time!=undefined)
 	{
 		this.timePlayed=time;
-		this.duration=computeTicks(2000)
+		//this.duration=computeTicks(2000)
 	}
 	else
 		this.timePlayed=-1;
@@ -160,7 +160,7 @@ var track=song.tracks[trackNum-1];
 		//alert("!recording "+track.name);
 		track.timer.stop();
 		if(track.notes.length!=0)
-			track.notes.push(new Note("C9",0, track.trackNum));
+			track.notes.push(new Note("C9",-1, track.trackNum));
 	
 	}
 	
@@ -186,6 +186,27 @@ Track.prototype.saveMouseUp=function(event)
 		alert("There is no track to save.");
 	else 
 	{
+		var initialTicks=computeTicks(2000);
+		/** TODO: Calculate duration*/
+		for(var i=0;i<track.notes.length;i++)
+		{
+			var currnote=track.notes[i];
+			var nextnote=track.notes[i+1];
+			if(!nextnote||nextnote.timePlayed==-1)
+			{
+				currnote.duration=initialTicks;
+				//nextnote.duration=0;
+			}
+			else
+			{
+				var milliDur=nextnote.timePlayed-currnote.timePlayed;
+				if(milliDur<0)
+			throw new Error("Negative duration at: i= "+i+" nextnote.timePlayed= "+nextnote.timePlayed+" currnote.timePlayed= "+currnote.timePlayed)
+				currnote.duration= computeTicks(milliDur*10);
+			}
+			
+		}
+		//alert("no audio will be generated on download. Still calculating durations")
 		song.makeSong([track]);
 	}
 
