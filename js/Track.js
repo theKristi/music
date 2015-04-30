@@ -14,8 +14,6 @@ Track=function(trackNum)
 	this.timer=new Timer(10);
 	this.recording=false;
 	this.instrument="";
-	
-	//console.log("making"+this.name);
 }
 
 /*
@@ -30,11 +28,12 @@ function Note(id, time, channel)
 	if (time!=undefined)
 	{
 		this.timePlayed=time;
-		//this.duration=computeTicks(2000)
+		this.duration=computeTicks(2000)
 	}
 	else
 		this.timePlayed=-1;
 }
+/**TODO: Add Documentation**/
 function computeTicks(milliseconds)
 {
 	//beats per minute
@@ -45,6 +44,32 @@ function computeTicks(milliseconds)
 	return ticks;
 }
 
+function calculateDurations(notes)
+{
+	var initialTicks=computeTicks(2000);
+		/** TODO: debug: second to last note duration always too long*/
+		for(var i=0;i<notes.length-1;i++)
+		{
+			/*if(i+1==notes.length-3)
+				 console.log("breakpoint")*/
+			var currnote=notes[i];
+			var nextnote=notes[i+1];
+			if(nextnote.timePlayed==-1)
+			{
+				currnote.duration=initialTicks;
+				nextnote.duration=0;
+			}
+			else
+			{
+				
+				var milliDur=nextnote.timePlayed-currnote.timePlayed;
+				if(milliDur<0)
+			throw new Error("Negative duration at: i= "+i+" nextnote.timePlayed= "+nextnote.timePlayed+" currnote.timePlayed= "+currnote.timePlayed)
+				currnote.duration= computeTicks(milliDur*10);
+				
+			}
+		}
+}
 /****************************create/remove Gui tab *********************************/
 
 /*
@@ -53,7 +78,7 @@ function computeTicks(milliseconds)
 */
 Track.prototype.createTab=function()
 {
-//add tab
+	//add tab
 	var $trackTab="<li id='"+this.name+"tab'class='' style='background:"+this.color+"'>\
 					<a href='' id='"+this.name+"'style='background:"+this.color+"'>"+this.name+"</a>\
 							</li>"
@@ -68,8 +93,8 @@ Track.prototype.createTab=function()
 	<div id='player'>\
 	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>REC</div></div>\
 						<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
-						<div class='button playerElement saveButton' id='"+this.name+"saveButton'>SAVE</div>\
-						<div class='button playerElement playButton' id='"+this.name+"playButton'><div class='triangle'><div></div></div>\
+						<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE TRACK</div>\
+						<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div class='triangle'><div></div></div>\
 						</div>\
     					</div>\	"
 	
@@ -110,19 +135,19 @@ this.instrument=buildInstrument(name);
  this.instrument.build(this.name);
 }
 /*************************************End Attribute setters******************************************/
+
 /*************************************recording handlers*********************************************/
 /*
-*This function saves a note that has been played to this tracks note array  
+*This function saves a note that has been played to this track's note array  
 *@param note{String} the name of the Note to be saved.
 *@param time{Integer} the time(in milliSeconds) which the note to be saved was played.
 */
 Track.prototype.saveNote=function(note,time)
 {
- var n=new Note(note, time,this.trackNum);
- 
- console.log("saving note:"+note);
- this.notes.push(n);
+	var n=new Note(note, time,this.trackNum);
+	this.notes.push(n);
 }
+
 /*
 *This function handles what happens when a note is played in the track
 *@param note{String} the name of the note played.
@@ -133,25 +158,30 @@ Track.prototype.notePlayed=function(note)
 		this.saveNote(note,this.timer.getTime());
 }
 /*************************************End recording handlers******************************************/
+
 /*************************************Track Player handlers*******************************************/
 /*
 *This function handles what happens when the record button is pressed 
-*  changes the button look, starts/stops this tracks timer, and sets this tracks recording flag attribute. 
+*changes the button look, starts/stops this tracks timer, and sets this tracks recording flag attribute. 
 */
 function recMouseUp(event)
 {
-var divid=this.id;
-var trackNum=parseInt(divid.charAt(5));
-var track=song.tracks[trackNum-1];
+	var divid=this.id;
+	var trackNum=parseInt(divid.charAt(5));
+	var track=song.tracks[trackNum-1];
+	
 	if(!track.recording)
 	{
-	track.notes=[];
-	track.timer.start();
-	console.log("recording "+track.name);
-	$(".light").addClass("glow");
-	$("#"+divid).addClass("pressed");
-	track.recording=true;
+		track.notes=[];
+		track.timer.start();
+		console.log("recording "+track.name);
+		$(".light").addClass("glow");
+		$("#"+divid).addClass("pressed");
+		$("#track"+trackNum+"saveButton").addClass("pressed");
+		$("#track"+trackNum+"playButton").addClass("pressed")
+		track.recording=true;
 	}
+	
 	else
 	{
 		$(".light").removeClass("glow");
@@ -160,7 +190,12 @@ var track=song.tracks[trackNum-1];
 		//alert("!recording "+track.name);
 		track.timer.stop();
 		if(track.notes.length!=0)
+		{	
 			track.notes.push(new Note("C9",-1, track.trackNum));
+			track.notes.push(new Note("C9",-1, track.trackNum));
+			$("#track"+trackNum+"saveButton").removeClass("pressed");
+			$("#track"+trackNum+"playButton").removeClass("pressed");
+		}	
 	
 	}
 	
@@ -169,15 +204,16 @@ var track=song.tracks[trackNum-1];
 *This function handles what happens when the play button is clicked
 *changes look to pressed
 */
-/**TODO: Functionality needs to be added when playback is actually possible**/
+
 function playMouseUp()
 {
-	
-	var sound=$("#lowClick")[0];
-	sound.play();
+/**TODO: Functionality needs to be added when playback is actually possible**/	
+	//var sound=$("#lowClick")[0];
+	//sound.play();
 }
+
 /*
-*This function handles what happens when the save button is pressed
+*This function handles what happens when the save track button is pressed
 */
 Track.prototype.saveMouseUp=function(event)
 {
@@ -186,31 +222,15 @@ Track.prototype.saveMouseUp=function(event)
 		alert("There is no track to save.");
 	else 
 	{
-		var initialTicks=computeTicks(2000);
-		/** TODO: Calculate duration*/
-		for(var i=0;i<track.notes.length;i++)
-		{
-			var currnote=track.notes[i];
-			var nextnote=track.notes[i+1];
-			if(!nextnote||nextnote.timePlayed==-1)
-			{
-				currnote.duration=initialTicks;
-				//nextnote.duration=0;
-			}
-			else
-			{
-				var milliDur=nextnote.timePlayed-currnote.timePlayed;
-				if(milliDur<0)
-			throw new Error("Negative duration at: i= "+i+" nextnote.timePlayed= "+nextnote.timePlayed+" currnote.timePlayed= "+currnote.timePlayed)
-				currnote.duration= computeTicks(milliDur*10);
-			}
-			
-		}
+		calculateDurations(track.notes);
 		//alert("no audio will be generated on download. Still calculating durations")
-		song.makeSong([track]);
+		var tracksong=makeSongFromTracks([track]);
+		tracksong.save(true);
 	}
-
+			
+	
 }
+
 /*
 *This function sets the event handlers for this track's elements
 */
@@ -223,7 +243,7 @@ Track.prototype.setEventHandlers=function()
 	$("#"+this.name+"playButton").click(playMouseUp);
 
 }
-/**
+/*
 *This function handles what happens to update the timer
 *@param timerArray{Array} an array of params that really just holds the timer to update.
 **/
@@ -231,6 +251,5 @@ function updateTimer(timerArray)
 {
 	var timer=timerArray[0];
 	var name=timerArray[1];
-console.log("updateTimer:"+timer)
 	$("#"+name).text(timer);
 }

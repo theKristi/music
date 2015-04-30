@@ -24,6 +24,13 @@ box-shadow: 0px 0px 0px 0px rgb( 0, 0, 0 );
 	cursor:pointer;
 	/*background:gray;*/
 }
+.button:active
+{
+	box-shadow: 0px 0px 0px 0px rgb( 0, 0, 0 );
+ background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+  background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
+}
 /*************************************************************************recordButton*********************************************/
 .recordButton
 {
@@ -85,13 +92,7 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
 	height:40%;
 	width:5%;
 }
-.playButton:active
-{
-	box-shadow: 0px 0px 0px 0px rgb( 0, 0, 0 );
- background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
-  background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
-  background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
-}
+
 .triangle
 {
 	margin-top:10%; margin-right:auto;margin-bottom:0; margin-left:auto;
@@ -119,17 +120,11 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
 .saveButton
 {
 	height:40%;
-	width:7%;
+	width:14%;
 	font-size:4vh;
   font-family: "Plantagenet Cherokee";
   color: white;
   text-align: center;
   position:relative;
 }
-.saveButton:active
-{
-box-shadow: 0px 0px 0px 0px rgb( 0, 0, 0 );
- background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
-  background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
-  background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(97,97,105) 5%, rgb(129,128,128) 100%);
-}
+
