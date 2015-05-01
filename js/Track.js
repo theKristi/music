@@ -102,7 +102,8 @@ Track.prototype.createTab=function()
 								<option>Piano</option>\
 								</Select></label></div>\
 	<div id='player'>\
-	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>REC</div></div>\
+	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>  REC</div>\
+	</div>\
 						<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
 						<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE TRACK</div>\
 						<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div class='triangle'><div></div></div></div>\
@@ -216,14 +217,14 @@ function recMouseUp(event)
 *changes look to pressed
 */
 
-function playMouseUp()
+function playMouseUp(event)
 {
 /**TODO: Functionality needs to be added when playback is actually possible**/
 	if(!($(this).hasClass("pressed")))
 	{
-		//stuff
-		//var sound=$("#lowClick")[0];
-	//sound.play();
+		var track=event.data[0];
+		// call makeSongFromTracks
+		
 	}
 	
 }
@@ -244,7 +245,7 @@ Track.prototype.saveMouseUp=function(event)
 			//alert("no audio will be generated on download. Still calculating durations")
 			var tracksong=makeSongFromTracks([track]);
 			tracksong.save(true);
-		}
+		}`
 	}
 			
 	
@@ -259,7 +260,7 @@ Track.prototype.setEventHandlers=function()
 	$("#"+this.name+"Instrument").change(this.changeInstrument);
 	$("#"+this.name+"saveButton").click([this],this.saveMouseUp);
 	this.timer.addListener(updateTimer,[this.timer,this.name+"recordingTimer"]);
-	$("#"+this.name+"playButton").click(playMouseUp);
+	$("#"+this.name+"playButton").click([this],playMouseUp);
 
 }
 
