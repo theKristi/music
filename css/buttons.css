@@ -95,13 +95,17 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
 
 .triangle
 {
-	margin-top:10%; margin-right:auto;margin-bottom:0; margin-left:auto;
+	margin:auto;
 	 width: 0;
     height: 0;
     padding-top: 25%;
     padding-bottom: 25%;
     padding-left: 25%;
     overflow: hidden;
+	position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+   
 }
 .triangle div
 {
@@ -116,6 +120,25 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
 	
 }
 /******************************************************************End play Button**************************************************/
+/*********************************************************************stop Button**************************************************/
+.stopButton
+{
+	height:40%;
+	width:5%;
+}
+
+.square
+{
+	background:rgba(167,9,9,.80);
+	width: 4vh;
+    height:4vh;
+	position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+   margin:auto;
+}
+
+/******************************************************************End stop Button**************************************************/
 /******************************************************************save Button******************************************************/
 .saveButton
 {

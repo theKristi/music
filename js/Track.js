@@ -33,7 +33,12 @@ function Note(id, time, channel)
 	else
 		this.timePlayed=-1;
 }
-/**TODO: Add Documentation**/
+
+/*
+*This function accepts a millisecond duration and converts it into midi ticks to use with jsmidi
+*@param milliseconds{Number} the time to convert to ticks
+*@return ticks{Number} the midi representation of the number of milliseconds passed in
+*/
 function computeTicks(milliseconds)
 {
 	//beats per minute
@@ -44,6 +49,12 @@ function computeTicks(milliseconds)
 	return ticks;
 }
 
+/*
+*This function calculates the durations for an array of notes
+*by iterating through the array and calculating the amount of 
+*time between consecutive notes played.
+*@param notes{Array} the array of notes with which to calculate durations 
+*/
 function calculateDurations(notes)
 {
 	var initialTicks=computeTicks(2000);
@@ -94,8 +105,8 @@ Track.prototype.createTab=function()
 	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>REC</div></div>\
 						<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
 						<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE TRACK</div>\
-						<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div class='triangle'><div></div></div>\
-						</div>\
+						<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div class='triangle'><div></div></div></div>\
+						<div class='button playerElement stopButton pressed' id='"+this.name+"stopButton'><div class='square'></div></div>\
     					</div>\	"
 	
 	
@@ -207,9 +218,14 @@ function recMouseUp(event)
 
 function playMouseUp()
 {
-/**TODO: Functionality needs to be added when playback is actually possible**/	
-	//var sound=$("#lowClick")[0];
+/**TODO: Functionality needs to be added when playback is actually possible**/
+	if(!($(this).hasClass("pressed")))
+	{
+		//stuff
+		//var sound=$("#lowClick")[0];
 	//sound.play();
+	}
+	
 }
 
 /*
@@ -217,15 +233,18 @@ function playMouseUp()
 */
 Track.prototype.saveMouseUp=function(event)
 {
-	var track=event.data[0];
-	if(track.notes.length===0)
-		alert("There is no track to save.");
-	else 
+	if(!($(this).hasClass("pressed")))
 	{
-		calculateDurations(track.notes);
-		//alert("no audio will be generated on download. Still calculating durations")
-		var tracksong=makeSongFromTracks([track]);
-		tracksong.save(true);
+		var track=event.data[0];
+		if(track.notes.length===0)
+			alert("There is nothing recorded");
+		else 
+		{
+			calculateDurations(track.notes);
+			//alert("no audio will be generated on download. Still calculating durations")
+			var tracksong=makeSongFromTracks([track]);
+			tracksong.save(true);
+		}
 	}
 			
 	
@@ -243,6 +262,7 @@ Track.prototype.setEventHandlers=function()
 	$("#"+this.name+"playButton").click(playMouseUp);
 
 }
+
 /*
 *This function handles what happens to update the timer
 *@param timerArray{Array} an array of params that really just holds the timer to update.
