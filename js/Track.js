@@ -221,10 +221,12 @@ function playMouseUp(event)
 {
 /**TODO: Functionality needs to be added when playback is actually possible**/
 	if(!($(this).hasClass("pressed")))
-	{
+	{	
 		var track=event.data[0];
+		var player=MIDI.Player;
 		// call makeSongFromTracks
-		
+		var track64=makeSongFromTracks(track).b64;
+		player.loadFile(track64);
 	}
 	
 }
@@ -245,7 +247,7 @@ Track.prototype.saveMouseUp=function(event)
 			//alert("no audio will be generated on download. Still calculating durations")
 			var tracksong=makeSongFromTracks([track]);
 			tracksong.save(true);
-		}`
+		}
 	}
 			
 	
