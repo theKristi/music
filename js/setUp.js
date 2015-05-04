@@ -15,7 +15,7 @@ function setUp()
 $("#userTrackNumber").change(song.displayTracks);
 song.displayTracks(); 
 hideTabs("welcome");
-
+//MIDI.USE_XHR=false;
  }
  /*
  * This function hides all tabs content except the parameter
