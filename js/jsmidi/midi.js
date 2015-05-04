@@ -211,7 +211,11 @@ var MidiWriter = function(config) {
 			  window.open("data:audio/midi;base64," + this.b64,
                             "JSMidi generated output",
                             "resizable=yes,scrollbars=no,status=no");}
-            }
+            },
+			src: function()
+			{
+				return "data:audio/midi;base64," + this.b64;
+			}
         };
 
     } else {

@@ -59,13 +59,15 @@ Song.prototype.displayTracks=function()
 /**TODO:Add Documentaion**/
 function makeSongFromTracks(tracks)
 {
-	
+/**TODO:check to make sure tracks is an array**/	
+
 //jsmidi stuff here
 	midiTracks=[]
 	for(var i=0;i<tracks.length;i++)
 	{
 		//send notes[] through MidiEvent.createNote(note) to create note Events.
 		var track=tracks[i];
+		/**TODO:check to make sure track is valid**/	
 		var noteEvents=[];
 		track.notes.forEach(function(note){Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note,true));});
 	
