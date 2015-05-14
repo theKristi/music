@@ -113,7 +113,7 @@ Track.prototype.createTab=function()
 	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>  REC</div>\</div>\
 						<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
 						<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE TRACK</div>\
-						<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div class='container'><div class='triangle'></div></div></div>\
+						<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div id='graphicContainer' class='tricontainer'><div class='triangle'></div></div></div>\
 						<div class='button playerElement stopButton pressed' id='"+this.name+"stopButton'><div class='square'></div></div>\
     					</div>\
 						<div id='"+this.name+"_notes'></div>"
@@ -230,20 +230,25 @@ function recMouseUp(event)
 /*Toggles play button graphic*/
 function togglePlay(button)
 {
+
 	/**TODO:Fix this**/
 	var graphicContainer=button.children[0].children[0];
 if($(graphicContainer).hasClass("triangle"))
 		{
-			$(graphicContainer).removeClass("triangle");
-			//$(grapicContainer).addClass("leftRecPause");
-			//$(grapicContainer).addClass("righttRecPause");
+			$(".triangle").remove();
+			$("#graphicContainer").removeClass("tricontainer")
+			//add pause divs
+			/**Kristi: use append**/
+			$("#graphicContainer").append("<div class='recPause left'></div><div class='recPause right'></div>");
 		}
 		else
 		{
-			//$(grapicContainer).removeClass("leftRecPause");
-			//$(grapicContainer).removeClass("rightRecPause");
-			
-			$(graphicContainer).addClass("triangle");
+			//remove pause divs 
+			/**Kristi: use remove**/
+			$(".recPause").remove();
+			//$(".rightRecPause").remove();
+			$("#graphicContainer").addClass("tricontainer");
+			$("#graphicContainer").append("<div class='triangle'></div>");
 		}	
 }
 /*
@@ -268,7 +273,7 @@ function playMouseUp(event)
 		if(midiTrack.b64==="TVRoZAAAAAYAAAAAAIA=")
 			alert("just hedr");
 		//alert(midiTrack.src());
-		player.loadFile(midiTrack.src(),player.start);
+//player.loadFile(midiTrack.src(),player.start);
 		togglePlay(this);
 	}
 	

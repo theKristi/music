@@ -90,8 +90,11 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
 	height:40%;
 	width:5%;
 }
-
-.container
+#graphicContainer
+{
+	height:100%
+}
+.tricontainer
 {
 	margin:auto;
 	 width: 0;
@@ -102,7 +105,7 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
     overflow: hidden;
 	position: relative;
 	top: 50%;
-	transform: translateY(-50%);
+	transform: translateY(-30%);
    
 }
 .triangle
@@ -117,24 +120,54 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
     border-left: 500px solid rgba(255,255,255,.80);
 	
 }
-.leftRecPause
+.recPause
+{
+		background:rgba(255,255,255,.80);
+	width: 10%;
+    height: 80%;
+	position: relative;
+	-moz-border-radius: 50%; 
+    -webkit-border-radius: 50%; 
+    border-radius: 40%;
+	float:left;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.left
+{
+	margin-left:35%;
+	margin-right:5%;
+}
+.right
+{
+	margin-left:5%;
+	margin-right:35%;
+}
+/*.leftRecPause
 {
 	background:rgba(255,255,255,.80);
-	width: 2vh;
-    height: 8vh;
+	width: 20%;
+    height: 80%;
 	position: relative;
-	
-   margin:left;
+	border-radius:30%;
+	margin-left:25%;
+	margin-right:5%;
+	float:left;
+   top: 50%;
+	transform: translateY(-50%);
 }
 .rightRecPause
 {
 	background:rgba(255,255,255,.80);
-	width: 2vh;
-    height: 8vh;
+	width: 20%;
+    height: 80%;
 	position: relative;
-	top: 50%;
-  transform: translateY(-50%);
-   margin:right;
+	border-radius:30%;
+	margin-left:5%;
+	margin-right:25%;
+	float:left;
+   top: 50%;
+	transform: translateY(-50%);
 }
 /******************************************************************End play Button**************************************************/
 /*********************************************************************stop Button**************************************************/
@@ -153,6 +186,9 @@ box-shadow: 0px 0px 15px 5px rgba(238, 32, 32, .75);
   top: 50%;
   transform: translateY(-50%);
    margin:auto;
+   -moz-border-radius: 10%; 
+    -webkit-border-radius: 10%; 
+    border-radius: 10%;
 }
 
 /******************************************************************End stop Button**************************************************/
