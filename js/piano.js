@@ -74,7 +74,7 @@ Piano.prototype.keymousedown=function(event)
 	event.preventDefault();
 	mouseDown=true;
 	var keyid=event.data[0];
-	$("#"+keyid).css("background", song.tracks[parseInt(event.data[0].charAt(0))-1].color);
+	lightKey(event.data[0]);
 	event.data[1].playNote(keyid);
 }
 
@@ -90,10 +90,13 @@ Piano.prototype.keymouseenter=function(event)
 	{
 			
 		event.data[1].playNote(event.data[0]);
-	$("#"+event.data[0]).css("background", song.tracks[parseInt(event.data[0].charAt(0))-1].color);
+		lightKey(event.data[0])
 	}
 }
-
+function lightKey(note)
+{
+	$("#"+note).css("background", song.tracks[parseInt(note.charAt(0))].color);
+}
 /*
 *This function handles what happens when the cursor exits a div which represents a key on the keyboard(piano)
 *it only does something when the left mouse button is down. 
@@ -130,7 +133,7 @@ Piano.prototype.loadSound=function()
 Piano.prototype.playNote=function(trackkeyid)
 {
 	var keyid=trackkeyid.substring(1);
-	var trackNum=parseInt(trackkeyid.charAt(0))-1;
+	var trackNum=parseInt(trackkeyid.charAt(0));
 	var note=MIDI.keyToNote[keyid];
 	song.tracks[trackNum].notePlayed(keyid);
 	var delay = 0; 

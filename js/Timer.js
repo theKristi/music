@@ -54,7 +54,7 @@ this.start=function()
 	{
 	
 	//CurrentTimer=this;
-		//this.currentTime=0;
+		this.currentTime=0;
 //console.log("Time started:"+this.currentTime);
 		this.interval=setInterval(function(){ 
 		var time=timers[id]; 
@@ -93,7 +93,7 @@ Timer.prototype.dispatchIncrement=function(/*event*/)
 **/		
 Timer.prototype.stop=function()
 {
-		this.currentTime=0;
+		//this.currentTime=0;
 		clearInterval(this.interval);
 //alert("Timestopped:");
 }

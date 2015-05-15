@@ -1,7 +1,7 @@
 /*Song.js is just a container for the tracks. Can create and display tracks*/
 
 /**TODO:needs "song" functions like download(), play(), pause(), stop()**/
-
+var player=MIDI.Player;
 /*This function is the constructor for the song object*/
 Song=function()
 {
@@ -17,7 +17,7 @@ Song.prototype.createTracks=function(numberToCreate)
 {
 	for(i=0;i<numberToCreate;i++)
 	{
-		this.tracks.push(new Track(i+1));
+		this.tracks.push(new Track(i));
 		//this.tracks[i].createTab();
 	}
 }
@@ -30,7 +30,7 @@ Song.prototype.displayTracks=function()
 {
 	var numberToDisplay=$('#userTrackNumber option:selected').val();
 	var active=$("#menu .active a")[0].id;
-	for(i=0;i<song.tracks.length;i++)
+	for(var i=0;i<song.tracks.length;i++)
 	{
 		if(i<numberToDisplay)
 		{

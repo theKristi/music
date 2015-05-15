@@ -15,6 +15,7 @@ function setUp()
 $("#userTrackNumber").change(song.displayTracks);
 song.displayTracks(); 
 hideTabs("welcome");
+MIDI.Player.addListener(light);
 //MIDI.USE_XHR=false;
  }
  /*
@@ -56,10 +57,10 @@ function tabSwitch()
 				});
 				
 }//end tabSwitch
-function updateTimer(timerArray)
-{
-	var timer=timerArray[0];
-//console.log("updateTimer:"+timer)
-	$("#timer"+(timer.ID+1)).text(timer);
+ function light(data) { // set it to your own function!
+		
+    var channel = data.channel; // channel note is playing on
+    var note = MIDI.noteToKey[data.note]; 
+    lightKey(""+channel+note);
 }
 
