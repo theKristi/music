@@ -256,7 +256,7 @@ function recMouseUp(event)
 
 function playMouseUp(event)
 {
-/**TODO: Functionality needs to be added when playback is actually possible**/
+/**TODO: Fix toggle on end**/
 	if(!($(this).hasClass("pressed")))
 	{	
 		var track=event.data[0];
