@@ -2,7 +2,7 @@
 $(document).ready(setUp); // End Document Ready
 /*Global variables*/
 /*colorTable: this is the array that defines the color for each track*/
-var colorTable=["red", "green", "blue","yellow"]
+var colorTable=["rgb(255, 0, 0)", "rgb(0, 128, 0)", "rgb(0, 0, 255)","rgb(255, 255, 0)"]
 /*song:the data structure that holds everything "song" related*/
 var song;
 /*
@@ -57,10 +57,21 @@ function tabSwitch()
 				});
 				
 }//end tabSwitch
+
  function light(data) { // set it to your own function!
-		
-    var channel = data.channel; // channel note is playing on
-    var note = MIDI.noteToKey[data.note]; 
-    lightKey(""+channel+note);
+	var channel;
+	if(trackPlaying==undefined)
+		channel = data.channel; // channel note is playing on
+	else
+		channel=trackPlaying.channel;
+    var note = MIDI.noteToKey[data.note];
+	var message=data.message;
+	if (message===144)
+	{
+		clearColorFromAllKeys(colorTable[channel]);
+		lightKey(""+channel+note, colorTable[channel]);
+	}
+	else 
+		unlightKey(""+channel+note)
 }
 

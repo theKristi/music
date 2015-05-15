@@ -63,6 +63,8 @@ function keymouseup(event)
 	
 	$(".keyWhite").css("background", "");
 	$(".keyBlack").css("background", "");
+	$(".keyWhite").removeClass("pressed");
+	$(".keyBlack").removeClass("pressed")
 }
 
 /*
@@ -74,7 +76,8 @@ Piano.prototype.keymousedown=function(event)
 	event.preventDefault();
 	mouseDown=true;
 	var keyid=event.data[0];
-	lightKey(event.data[0]);
+	lightKey(event.data[0],song.tracks[parseInt(event.data[0].charAt(0))].color);
+	$("#"+event.data[0]).addClass("pressed");
 	event.data[1].playNote(keyid);
 }
 
@@ -90,13 +93,37 @@ Piano.prototype.keymouseenter=function(event)
 	{
 			
 		event.data[1].playNote(event.data[0]);
-		lightKey(event.data[0])
+		lightKey(event.data[0],song.tracks[parseInt(event.data[0].charAt(0))].color);
+		$("#"+event.data[0]).addClass("pressed");
 	}
 }
-function lightKey(note)
+function lightKey(note,color)
 {
-	$("#"+note).css("background", song.tracks[parseInt(note.charAt(0))].color);
+	//keymouseup();
+	$("#"+note).css("background", color);
 }
+function unlightKey(note)
+{
+	$("#"+note).css("background", "");
+}
+function clearColorFromAllKeys(color)
+{
+	var whiteKeys=$(".keyWhite").filter(function()
+	{
+		var keycolor=$(this).css("background-color").toLowerCase();
+		if (keycolor==color)
+			return this;
+	});
+	whiteKeys.css("background-color","");
+	var blackKeys=$(".keyBlack").filter(function()
+	{
+		var keycolor=$(this).css("background").toLowerCase();
+		if (keycolor==color)
+			return this;
+	});
+	blackKeys.css("background","");
+}
+
 /*
 *This function handles what happens when the cursor exits a div which represents a key on the keyboard(piano)
 *it only does something when the left mouse button is down. 
@@ -108,13 +135,14 @@ if(mouseDown)
 	{
 		var keyid=event.data[0];
 	$("#"+keyid).css("background", "");
+	$("#"+event.data[0]).removeClass("pressed");
 	}
 }
 
 /*
 * This function is responsible for loading the soundfont for the piano.
 */
-Piano.prototype.loadSound=function()
+function loadPianoSound()
 {
 	MIDI.loadPlugin({
 		soundfontUrl: "./soundfont/",

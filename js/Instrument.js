@@ -6,7 +6,7 @@ function buildInstrument(name)
 	{
 		var p= new Piano();
 		if(!pianoLoaded)
-		p.loadSound();
+		loadPianoSound();
 		return p;
 	}
 

@@ -1,5 +1,5 @@
 /*Track.js*/
-
+var trackPlaying;
 /*
 *This function is a constructor for the track object
 *@param{integer} this is the index of the track in the song.tracks array plus 1 
@@ -39,7 +39,7 @@ function Note(id, time, channel)
 {
 this.name=id
  this.pitch=noteTable[id];
- this.channel=channel;
+ //this.channel=channel;
 	if (time!=undefined)
 	{
 		this.timePlayed=time;
@@ -183,7 +183,7 @@ this.instrument=buildInstrument(name);
 */
 Track.prototype.saveNote=function(note,time)
 {
-	var n=new Note(note, time,this.channel);
+	var n=new Note(note, time);
 	if(this.notes.length>0)
 	{
 		var lastNote=this.notes[this.notes.length-1];
@@ -269,7 +269,10 @@ function playMouseUp(event)
 
 		//alert(midiTrack.src());
 		if(!player.playing)
-			player.loadFile(track.midiTrack.src(),track.play);
+		{
+			player.loadFile(track.midiTrack.src());
+			track.play();
+		}
 		else
 			track.pause();
 		togglePlay(this);
@@ -322,6 +325,7 @@ Track.prototype.setEventHandlers=function()
 Track.prototype.play=function()
 {
 	//var player=MIDI.Player;
+	trackPlaying=this;
 	player.resume();
 	
 	
@@ -331,8 +335,13 @@ Track.prototype.pause=function()
 	//alert("pause");
 	
 	player.pause();
+	trackPlaying=undefined;
 	
-	
+}
+Track.prototype.stop=function()
+{
+	player.stop();
+	trackPlaying= undefined;
 }
 /*********************************End Track Player handlers*******************************************/
 /*************************************Helper Functions*******************************************/

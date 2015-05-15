@@ -23,7 +23,7 @@ MIDI.Player = MIDI.Player || {};
 (function(midi) { "use strict";
 
 midi.DEBUG = false;
-midi.USE_XHR = true;
+midi.USE_XHR = false;
 midi.soundfontUrl = "./soundfont/";
 
 /*
