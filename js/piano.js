@@ -98,7 +98,7 @@ Piano.prototype.keymouseenter=function(event)
 	}
 }
 
-/**TODO: Add documentation, fix blackKeys(its not clearing properly)**/
+/**TODO: Add documentation**/
 function lightKey(note,color)
 {
 	//keymouseup();
@@ -120,11 +120,11 @@ function clearColorFromAllKeys(color)
 	whiteKeys.css("background-color","");
 	var blackKeys=$(".keyBlack").filter(function()
 	{
-		var keycolor=$(this).css("background").toLowerCase();
+		var keycolor=$(this).css("background-color").toLowerCase();
 		if (keycolor==color)
 			return this;
 	});
-	blackKeys.removeAttr('style');
+	blackKeys.css("background","");
 }
 
 /*
