@@ -140,9 +140,10 @@ Track.prototype.createTab=function()
 		this.changeInstrument();
 		this.displayed=true;
 		this.setEventHandlers();
-		if(this.timer.currentTime!==0)
+		if(this.midiTrack!==undefined)
 		{
 			$("#"+this.name+"recordingTimer").text(this.timer);
+			
 			activatePlayer(this.channel);
 		}
 	
@@ -218,7 +219,6 @@ function recMouseUp(event)
 	{
 		track.notes=[];
 		track.timer.start();
-		console.log("recording "+track.name);
 		$(".light").addClass("glow");
 		$("#"+divid).addClass("pressed");
 		deactivatePlayer(track.channel)
@@ -251,7 +251,7 @@ function recMouseUp(event)
 
 /*
 *This function handles what happens when the play button is clicked
-*
+*@param event{event} the event that was fired when the playButton was clicked
 */
 
 function playMouseUp(event)
@@ -300,11 +300,19 @@ function saveMouseUp(event)
 			
 	
 }
+/*
+*This function makes player buttons active for the specified track
+*@param trackNum{integer} the index of the track whose buttons you wish to make active
+*/ 
 function activatePlayer(trackNum)
 {
 	$("#track"+trackNum+"saveButton").removeClass("pressed");
 	$("#track"+trackNum+"playButton").removeClass("pressed");
 }
+/*
+*This function makes player buttons inactive for the specified track
+*@param trackNum{integer} the index of the track whose buttons you wish to make inactive
+*/ 
 function deactivatePlayer(trackNum)
 {
 	player.stop();
@@ -322,6 +330,10 @@ Track.prototype.setEventHandlers=function()
 	$("#"+this.name+"playButton").click([this],playMouseUp);
 
 }
+
+/*
+*This function plays the this track
+*/
 Track.prototype.play=function()
 {
 	//var player=MIDI.Player;
@@ -330,6 +342,9 @@ Track.prototype.play=function()
 	
 	
 }
+/*
+*This function pauses the this track
+*/
 Track.prototype.pause=function()
 {
 	//alert("pause");
@@ -345,10 +360,11 @@ Track.prototype.stop=function()
 }
 /*********************************End Track Player handlers*******************************************/
 /*************************************Helper Functions*******************************************/
+
 /*
 *This function handles what happens to update the timer
 *@param timerArray{Array} an array of params that really just holds the timer to update.
-**/
+*/
 function updateTimer(timerArray)
 {
 	var timer=timerArray[0];
@@ -356,11 +372,13 @@ function updateTimer(timerArray)
 	$("#"+name).text(timer);
 }
 
-/* This function toggles play button graphic*/
+/* This function toggles play button graphic
+@param button{jquery element} the play button whose graphic you want to toggle.
+*/
 function togglePlay(button)
 {
 
-	/**TODO:Fix this**/
+	
 		var graphicContainer=button.children[0];
 	if($(graphicContainer.children[0]).hasClass("triangle"))
 		{
@@ -382,4 +400,21 @@ function togglePlay(button)
 			$(graphicContainer).addClass("tricontainer");
 			$(graphicContainer).append("<div class='triangle'></div>");
 		}	
+}
+
+function light(data) { // set it to your own function!
+	var channel;
+	if(trackPlaying==undefined)
+		channel = data.channel; // channel note is playing on
+	else
+		channel=trackPlaying.channel;
+    var note = MIDI.noteToKey[data.note];
+	var message=data.message;
+	if (message===144)
+	{
+		clearColorFromAllKeys(colorTable[channel]);
+		lightKey(""+channel+note, colorTable[channel]);
+	}
+	else 
+		unlightKey(""+channel+note)
 }

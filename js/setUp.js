@@ -16,7 +16,7 @@ $("#userTrackNumber").change(song.displayTracks);
 song.displayTracks(); 
 hideTabs("welcome");
 MIDI.Player.addListener(light);
-//MIDI.USE_XHR=false;
+
  }
  /*
  * This function hides all tabs content except the parameter
@@ -58,20 +58,5 @@ function tabSwitch()
 				
 }//end tabSwitch
 
- function light(data) { // set it to your own function!
-	var channel;
-	if(trackPlaying==undefined)
-		channel = data.channel; // channel note is playing on
-	else
-		channel=trackPlaying.channel;
-    var note = MIDI.noteToKey[data.note];
-	var message=data.message;
-	if (message===144)
-	{
-		clearColorFromAllKeys(colorTable[channel]);
-		lightKey(""+channel+note, colorTable[channel]);
-	}
-	else 
-		unlightKey(""+channel+note)
-}
+ 
 
