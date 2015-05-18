@@ -1,5 +1,6 @@
 /*Track.js*/
 var trackPlaying;
+
 /*
 *This function is a constructor for the track object
 *@param{integer} this is the index of the track in the song.tracks array plus 1 
@@ -18,6 +19,10 @@ Track=function(trackNum)
 	this.instrument="";
 	this.midiTrack;
 }
+/*
+*This function returns the string representation of a track
+*@return res{String} a list of the notes contained in the track.
+*/
 Track.prototype.toString=function()
 {
 	var res=this.name+" \n";
@@ -29,6 +34,7 @@ Track.prototype.toString=function()
 }
 
 /*************************************Note Object*******************************************/
+
 /*
 *This is a function that defines a data structure for a Note 
 *@param id{String} the name of the Note.
@@ -43,7 +49,7 @@ this.name=id
 	if (time!=undefined)
 	{
 		this.timePlayed=time;
-		this.duration=computeTicks(2000);
+		//this.duration=computeTicks(2000);
 	}
 	else
 		this.timePlayed=-1;
@@ -80,23 +86,23 @@ function calculateDurations(notes)
 {
 	var initialTicks=computeTicks(2000);
 		/** TODO: debug: second to last note duration always too long*/
-		for(var i=0;i<notes.length-1;i++)
+		for(var i=0;i<notes.length;i++)
 		{
-			/*if(i+1==notes.length-3)
-				 console.log("breakpoint")*/
+			if(i+1==notes.length)
+				 console.log("breakpoint")
 			var currnote=notes[i];
 			var nextnote=notes[i+1];
-			if(nextnote.timePlayed==-1)
+			if(nextnote==undefined)
 			{
 				currnote.duration=initialTicks;
-				nextnote.duration=0;
+				
 			}
 			else
 			{
 				
 				var milliDur=nextnote.timePlayed-currnote.timePlayed;
 				if(milliDur<0)
-			throw new Error("Negative duration at: i= "+i+" nextnote.timePlayed= "+nextnote.timePlayed+" currnote.timePlayed= "+currnote.timePlayed)
+					throw new Error("Negative duration at: i= "+i+" nextnote.timePlayed= "+nextnote.timePlayed+" currnote.timePlayed= "+currnote.timePlayed)
 				currnote.duration= computeTicks(milliDur*10);
 				
 			}
@@ -115,26 +121,25 @@ Track.prototype.createTab=function()
 {
 	//add tab
 	var $trackTab="<li id='"+this.name+"tab'class='' style='background:"+this.color+"'>\
-					<a href='' id='"+this.name+"'style='background:"+this.color+"'>track"+(this.channel+1)+"</a>\
-							</li>"
-		$("#menu").append($trackTab);
+	<a href='' id='"+this.name+"'style='background:"+this.color+"'>track"+(this.channel+1)+"</a>\
+	</li>"
+		
+	$("#menu").append($trackTab);
 	
 		
 	//add content
 	var $trackPlayer="<div class='"+this.name+"'  id='track' >\
 	<div id='trackColor' style='background:"+this.color+"'><label class='userInstrument'>Instrument:  <Select id='"+this.name+"Instrument'>\
-								<option>Piano</option>\
-								</Select></label></div>\
+	<option>Piano</option>\
+	</Select></label></div>\
 	<div id='player'>\
 	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>  REC</div>\</div>\
-						<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
-						<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE TRACK</div>\
-						<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div id='graphicContainer' class='tricontainer'><div class='triangle'></div></div></div>\
-						<div class='button playerElement stopButton pressed' id='"+this.name+"stopButton'><div class='square'></div></div>\
-    					</div>\
-						<div id='"+this.name+"_notes'></div>"
-						
-	
+	<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
+	<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE TRACK</div>\
+	<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div id='graphicContainer' class='tricontainer'><div class='triangle'></div></div></div>\
+	<div class='button playerElement stopButton pressed' id='"+this.name+"stopButton'><div class='square'></div></div>\
+    </div>\
+	<div id='"+this.name+"_notes'></div>";					
 	
 		$("#content").append($trackPlayer);
 		this.changeInstrument();
@@ -143,12 +148,8 @@ Track.prototype.createTab=function()
 		if(this.midiTrack!==undefined)
 		{
 			$("#"+this.name+"recordingTimer").text(this.timer);
-			
 			activatePlayer(this.channel);
 		}
-	
-		
-	
 }
 
 /*
@@ -170,13 +171,14 @@ Track.prototype.removeTab=function()
 */
 Track.prototype.changeInstrument=function()
 {
-var name=$("#"+this.name+"Instrument option:selected").text();
-this.instrument=buildInstrument(name);
- this.instrument.build(this.name);
+	var name=$("#"+this.name+"Instrument option:selected").text();
+	this.instrument=buildInstrument(name);
+	this.instrument.build(this.name);
 }
 /*************************************End Attribute setters******************************************/
 
 /*************************************recording handlers*********************************************/
+
 /*
 *This function saves a note that has been played to this track's note array  
 *@param note{String} the name of the Note to be saved.
@@ -205,6 +207,7 @@ Track.prototype.notePlayed=function(note)
 /*************************************End recording handlers******************************************/
 
 /*************************************Track Player handlers*******************************************/
+
 /*
 *This function handles what happens when the record button is pressed 
 *changes the button look, starts/stops this tracks timer, and sets this tracks recording flag attribute. 
@@ -234,8 +237,8 @@ function recMouseUp(event)
 		track.timer.stop();
 		if(track.notes.length!=0)
 		{	//$("#"+track.name+"_notes").text(track);
-			track.notes.push(new Note("C9",-1, track.channel));
-			track.notes.push(new Note("C9",-1, track.channel));
+			//track.notes.push(new Note("C9",-1, track.channel));
+			//track.notes.push(new Note("C9",-1, track.channel));
 			calculateDurations(track.notes);
 			activatePlayer(track.channel);
 		
@@ -253,10 +256,9 @@ function recMouseUp(event)
 *This function handles what happens when the play button is clicked
 *@param event{event} the event that was fired when the playButton was clicked
 */
-
 function playMouseUp(event)
 {
-/**TODO: Fix toggle on end**/
+	
 	if(!($(this).hasClass("pressed")))
 	{	
 		var track=event.data[0];
@@ -296,10 +298,10 @@ function saveMouseUp(event)
 			var tracksong=makeSongFromTracks([track]);
 			tracksong.save(true);
 		}
-	}
-			
+	}		
 	
 }
+
 /*
 *This function makes player buttons active for the specified track
 *@param trackNum{integer} the index of the track whose buttons you wish to make active
@@ -309,6 +311,7 @@ function activatePlayer(trackNum)
 	$("#track"+trackNum+"saveButton").removeClass("pressed");
 	$("#track"+trackNum+"playButton").removeClass("pressed");
 }
+
 /*
 *This function makes player buttons inactive for the specified track
 *@param trackNum{integer} the index of the track whose buttons you wish to make inactive
@@ -319,6 +322,7 @@ function deactivatePlayer(trackNum)
 	$("#track"+trackNum+"saveButton").addClass("pressed");
 	$("#track"+trackNum+"playButton").addClass("pressed");
 }
+
 /*
 *This function sets the event handlers for this track's elements
 */
@@ -339,9 +343,8 @@ Track.prototype.play=function()
 	//var player=MIDI.Player;
 	trackPlaying=this;
 	player.resume();
-	
-	
 }
+
 /*
 *This function pauses the this track
 */
@@ -353,6 +356,9 @@ Track.prototype.pause=function()
 	trackPlaying=undefined;
 	
 }
+/*
+*This function stops the track
+*/
 Track.prototype.stop=function()
 {
 	player.stop();
@@ -377,9 +383,8 @@ function updateTimer(timerArray)
 */
 function togglePlay(button)
 {
-
+	var graphicContainer=button.children[0];
 	
-		var graphicContainer=button.children[0];
 	if($(graphicContainer.children[0]).hasClass("triangle"))
 		{
 		
@@ -402,7 +407,14 @@ function togglePlay(button)
 		}	
 }
 
-function light(data) { // set it to your own function!
+/*
+*This function updates the track player and lights the keys while the track is playing
+*@param data{event} an event containing all the necessary information to process an individual note
+*/
+function updateTrack(data) 
+{
+	/**TODO: when song is added make sure the right div is passed into lightKey and unlight key**/
+	/**TODO: check for trackend and call togglePlay()**/
 	var channel;
 	if(trackPlaying==undefined)
 		channel = data.channel; // channel note is playing on

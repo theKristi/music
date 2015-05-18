@@ -288,7 +288,7 @@ MidiEvent.createNote = function(note, sustained) {
         // note at a particular time. If not specified it takes the default
         // value for it.
         // TODO: Is is good to have a default value for it?
-        events.push(MidiEvent.noteOff(note, note.duration || DEFAULT_DURATION));
+        events.push(MidiEvent.noteOff(note, note.duration));
     }
 
     return events;

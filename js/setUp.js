@@ -15,7 +15,7 @@ function setUp()
 $("#userTrackNumber").change(song.displayTracks);
 song.displayTracks(); 
 hideTabs("welcome");
-MIDI.Player.addListener(light);
+MIDI.Player.addListener(updateTrack);
 
  }
  /*
