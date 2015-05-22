@@ -16,6 +16,7 @@ $("#userTrackNumber").change(song.displayTracks);
 song.displayTracks(); 
 hideTabs("welcome");
 MIDI.Player.addListener(updateTrack);
+MIDI.Player.setAnimation(listenForEnd)
 
  }
  /*
@@ -26,6 +27,7 @@ function hideTabs(notToHide)
 {
 	
 	$("#"+notToHide).trigger("click");
+	
 	
 }
 /*
