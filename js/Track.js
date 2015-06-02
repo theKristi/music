@@ -276,8 +276,8 @@ function playMouseUp(event)
 		//alert(midiTrack.src());
 		if(!player.playing)
 		{
-			player.loadFile(track.midiTrack.src());
-			track.play();
+			player.loadFile(track.midiTrack.src(),player.start());
+			//track.play();
 		}
 		else
 			track.pause();
@@ -362,7 +362,10 @@ Track.prototype.play=function()
 {
 	//var player=MIDI.Player;
 	trackPlaying=this;
+	if(player.currentTime>0)
 	player.resume();
+	else
+		player.start();
 }
 
 /*
