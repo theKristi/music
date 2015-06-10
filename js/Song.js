@@ -72,7 +72,7 @@ function makeSongFromTracks(tracks)
 		track.notes.forEach(function(note){
 			if (i<0)
 				note.channel=i;
-			Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note));
+			Array.prototype.push.apply(noteEvents, MidiEvent.createNote(note,true));
 			});
 	
 		//create new midi track from note events MidiTrack
