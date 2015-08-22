@@ -12,7 +12,7 @@ var whiteNoteDictionary=["C","D","E","F","G","A","B"];
 /**array used for naming black keys on the keyboard**/
 var blackNoteDictionary=["Db","Eb","Gb","Ab","Bb"];
 
-/**
+/*
 *This function is a constructor for the piano
 */
 Piano=function()
@@ -21,9 +21,9 @@ Piano=function()
 midiNumber:0;
 }
 
-/**
+/*
 * This function drives building the piano
-*@param tab{String} the tab on which to build the piano
+*@param tab{String} the name of the tab in htm1 on which to build the piano
 */
 Piano.prototype.build=function(tab)
 {
@@ -40,7 +40,14 @@ Piano.prototype.build=function(tab)
 */
 Piano.prototype.addSound=function(keyid)
 {
-
+/**TODO: Add touch event handlers**/
+var key=document.getElementById(keyid);
+//touchStart
+	key.addEventListener('touchStart',[keyid,this],this.keymousedown);
+//touchEnter
+	key.addEventListener('touchEnter',[keyid,this],this.keymouseenter);
+//touchLeave
+	key.addEventListener('touchLeave',[keyid,this],this.keymouseout);
 								//$("#pianoSounds").append("<audio preload='auto' id='"+keyid+"_sound' controls><source src='sondfonts/acoustic_grand_piano-mp3/"+keyid+".mp3' type='audio/mpeg'></audio>");
 	$("#"+keyid).mousedown([keyid,this],this.keymousedown);
 	$("#"+keyid).mouseenter([keyid,this],this.keymouseenter);
@@ -81,7 +88,7 @@ Piano.prototype.keymousedown=function(event)
 	event.data[1].playNote(keyid);
 }
 
-/*
+/*`
 *This function handles what happens when the cursor enters a div which represents a key on the keyboard(piano)
 *it only does something when the left mouse button is down. 
 *@param event{Event} the event that represents keymouseenter.
@@ -98,17 +105,31 @@ Piano.prototype.keymouseenter=function(event)
 	}
 }
 
-/**TODO: Add documentation**/
+
+/*
+*This function turns a specified note, a specified color.
+* @param note{String} the html ID of the note to change the color of.
+* @param color{String, rgb} the color in which to turn the note.
+*/
 function lightKey(note,color)
 {
 	//keymouseup();
 	$("#"+note).css("background", color);
+	console.log("light Key")
 }
+
+/*
+* This function turns the parameter key back to its originally specified color.
+* @param note{String} the html ID of the note you want to revert the color of.
+*/
 function unlightKey(note)
 {
 	$("#"+note).css("background", "");
 }
-
+/*
+*This function clears a specified color from all the keys.
+* @param{string, rgb} the color to remove from the keys.
+*/
 function clearColorFromAllKeys(color)
 {
 	var whiteKeys=$(".keyWhite").filter(function()
