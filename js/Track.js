@@ -139,7 +139,7 @@ Track.prototype.createTab=function()
 	<div id='player'>\
 	<div class='button playerElement recordButton' id='"+this.name+"recordButton' ><div class='light'></div><div class='text'>  REC</div>\</div>\
 	<div class='timer playerElement' id='"+this.name+"recordingTimer'>0:00.00</div>\
-	<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE TRACK</div>\
+	<div class='button playerElement saveButton pressed' id='"+this.name+"saveButton'>SAVE</div>\
 	<div class='button playerElement playButton pressed' id='"+this.name+"playButton'><div id='graphicContainer' class='tricontainer'><div class='triangle'></div></div></div>\
 	<div class='button playerElement stopButton pressed' id='"+this.name+"stopButton'><div class='square'></div></div>\
     </div>\
